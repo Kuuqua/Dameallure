@@ -2,10 +2,20 @@
 
 import { useState } from "react";
 import Button from "@/components/ui/Button";
+import { useCart } from "@/lib/cart-context";
+import { whatsappLink } from "@/data/site";
 
 export default function ProductOptions({ product }) {
   const [size, setSize] = useState(product.sizes[0]);
   const [color, setColor] = useState(product.colors[0]);
+  const [justAdded, setJustAdded] = useState(false);
+  const { addItem } = useCart();
+
+  const handleAdd = () => {
+    addItem(product, { size, color, quantity: 1 });
+    setJustAdded(true);
+    window.setTimeout(() => setJustAdded(false), 1600);
+  };
 
   return (
     <div>
@@ -56,10 +66,18 @@ export default function ProductOptions({ product }) {
       </div>
 
       <div className="flex flex-wrap gap-4">
-        <Button variant="primary" type="button">
-          Add to Bag
+        <Button variant="primary" type="button" onClick={handleAdd}>
+          {justAdded ? "Added ✓" : "Add to Bag"}
         </Button>
-        <Button variant="gold" type="button">
+        <Button
+          as="a"
+          href={whatsappLink(
+            `Hi Dame Allure, I'd like help choosing "${product.name}".`
+          )}
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="gold"
+        >
           Ask a Dame Allure Curator
         </Button>
       </div>

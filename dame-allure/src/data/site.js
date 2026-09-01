@@ -5,6 +5,9 @@ export const siteConfig = {
   whatsappNumber: "233000000000",
   email: "hello@dameallure.com",
   instagram: "https://instagram.com/dameallure",
+  // TODO: replace with your real Paystack PUBLIC key (starts with pk_live_ once you're live —
+  // pk_test_ keys are safe to leave in client-side code, but never put a secret key (sk_...) here).
+  paystackPublicKey: "pk_test_replace_with_your_real_key",
 };
 
 export const primaryNav = [

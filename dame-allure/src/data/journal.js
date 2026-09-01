@@ -81,6 +81,39 @@ export const journalArticles = [
       "It's a reminder that handcrafted doesn't have to mean delicate. It can mean built to last.",
     ],
   },
+  {
+    slug: "accessorizing-for-work",
+    title: "The Three Accessories a Corporate Wardrobe Actually Needs",
+    category: "Work",
+    excerpt: "More jewellery isn't the answer. The right three pieces are.",
+    body: [
+      "A structured bag, a slim gold cuff, and one considered pair of earrings — that's the entire accessory kit most corporate wardrobes need. Everything past that is noise competing with the outfit, not supporting it.",
+      "The bag matters most: it's the piece that gets seen in every meeting, every commute, every handshake. Buy the structured tote before the trend bag.",
+      "Restraint here isn't about spending less. It's about spending once, on pieces considered enough to wear daily without ever feeling like too much.",
+    ],
+  },
+  {
+    slug: "dressing-for-a-wedding-guest",
+    title: "What to Wear as a Wedding Guest, Without Overthinking It",
+    category: "Occasions",
+    excerpt: "The goal isn't to disappear. It's not to compete either.",
+    body: [
+      "Wedding guest dressing has one real rule: read the room the couple is building, not just the dress code on the card. A beach wedding and a cathedral wedding both say 'formal' but mean very different things.",
+      "Colour is the actual minefield, not silhouette — avoid anything that could be mistaken for bridal white or upstage the wedding party's palette, and everything else is genuinely open.",
+      "When in doubt, a well-cut midi in a considered colour with one statement accessory has never once been the wrong answer.",
+    ],
+  },
+  {
+    slug: "building-a-capsule-for-two-cities",
+    title: "Building a Capsule Wardrobe for a Life Split Between Two Cities",
+    category: "Travel",
+    excerpt: "Living between Accra and anywhere else needs a different kind of packing logic.",
+    body: [
+      "A wardrobe built for two cities isn't two wardrobes — it's one wardrobe with enough range to flex between them. Start with pieces that read as 'put together' regardless of climate: a good blazer works in an air-conditioned office and a slightly cooler evening alike.",
+      "Keep a small, duplicate set of essentials — the basics you don't want to think about — in each location if you can. What travels should be the pieces with personality, not the pieces that just need to exist.",
+      "The real skill isn't packing light. It's deciding, once, what your wardrobe's throughline is so every future purchase in either city already knows where it fits.",
+    ],
+  },
 ];
 
 export function getArticle(slug) {

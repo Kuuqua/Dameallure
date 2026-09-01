@@ -1,9 +1,8 @@
 # Dame Allure — Website
 
 Next.js + Tailwind CSS project. All 7 build stages from the brief are
-complete: design system, homepage, shop + products, Create Your Edit,
-Travel + Gifting, About/Journal/Contact, and a responsive/accessibility/
-performance/SEO pass.
+complete, plus a full-build pass adding a real cart, real checkout wiring,
+real form capture, and more (see "Full-build pass" below).
 
 ## Run locally
 
@@ -24,6 +23,12 @@ Open http://localhost:3000
    `@netlify/plugin-nextjs` plugin - Netlify will detect and install it
    automatically).
 4. Deploy.
+5. **Turn on Netlify Forms**: Site configuration → Forms → make sure form
+   detection is enabled (it is by default on most plans). After your first
+   deploy, the four forms below should appear automatically under the
+   Forms tab — no extra setup needed. Add a notification (Forms →
+   Settings → Form notifications → email notification) so submissions
+   actually reach you.
 
 ## Before you launch - replace these placeholders
 
@@ -32,34 +37,43 @@ Open http://localhost:3000
     Allure business number, international format, digits only (e.g.
     `233241234567`).
   - `email`, `instagram` - currently placeholders.
+  - `paystackPublicKey` - currently a placeholder (`pk_test_replace_with_your_real_key`).
+    Get your real key from your Paystack dashboard (Settings → API Keys &
+    Webhooks). A `pk_test_...` key is safe to use here for testing; a
+    `pk_live_...` key goes live. **Never put a secret key (`sk_...`)
+    anywhere in this frontend code** — that belongs on a server only.
 - **Logo files** are in `public/brand/` (`logo.png`, `icon.png`) - already
   wired into the header and footer from your uploaded artwork.
 
-## Photography — all placeholders now visible, real images
+## Photography — real stock photos, tinted to the brand palette
 
-Every image on the site is currently a temporary [placehold.co](https://placehold.co)
-image in the brand palette (built by `src/lib/placeholder.js`), rather than
-a plain colour block — so the site looks and feels finished today, and
-swapping in real photography later is a small, contained change per spot:
+Every image on the site is a real photo from [Lorem Picsum](https://picsum.photos)
+(built by `src/lib/placeholder.js`), not a flat colour block — with a subtle
+plum tint (`PlaceholderPhoto.jsx`) so the random stock photography reads as
+on-brand rather than random, plus a small "Sample image" tag in the corner
+so it's obvious what still needs replacing. Swapping in real photography
+later is a small, contained change per spot:
 
-- `src/components/shop/ProductImagePlaceholder.jsx` — the shared
-  placeholder used by every product card, product detail page, shop
+- `src/components/ui/PlaceholderPhoto.jsx` — the actual image + tint +
+  "Sample image" tag. **This is the one place the tint/tag logic lives.**
+- `src/components/shop/ProductImagePlaceholder.jsx` — wraps
+  `PlaceholderPhoto` for every product card, product detail page, shop
   category tile, and journal card. **Swap this one component and most of
   the site updates.**
 - `src/components/editorial/Hero.jsx` — homepage hero panel
 - `src/components/brand/CollaborationCard.jsx` — Dame Allure Exclusives
-  lookbook images
+  lookbook images (via `ProductImagePlaceholder`)
 - `src/components/brand/PackagingShowcase.jsx` — packaging visual on the
   Curation Experience page
 - `src/app/travel/page.js` — Travel page hero image
 
 To swap any of these for a real photo: drop the image in `public/`, then
-replace the `<Image src={placeholderImage(...)} ... />` with
-`<Image src="/your-image.jpg" ... />` (keep the surrounding `fill`,
-`sizes`, and `className="object-cover"` props so sizing stays correct).
-Once nothing references `src/lib/placeholder.js` anymore, you can also
-remove the `images.remotePatterns` entry for `placehold.co` in
-`next.config.mjs`.
+replace `<PlaceholderPhoto ... />` with a plain
+`<Image src="/your-image.jpg" alt="..." fill sizes="..." className="object-cover" />`
+(the parent `<div className="relative ...">` around it already handles
+sizing — leave that as-is). Once nothing imports
+`src/lib/placeholder.js` anymore, you can also remove the
+`images.remotePatterns` entry for `picsum.photos` in `next.config.mjs`.
 
 ## What's built
 
@@ -153,18 +167,73 @@ remove the `images.remotePatterns` entry for `placehold.co` in
 - Verified: production build succeeds (48 routes, all static/SSG) and
   `eslint` runs clean
 
-## Beyond this MVP
+## Full-build pass
 
-The architecture is set up so these can be added without a rewrite:
-customer accounts, saved profiles/sizes, real payment/checkout, a CRM or
-email backend behind the forms, and a real product/content database in
-place of `src/data/`.
+This is the biggest single update to the project, adding real functionality
+rather than more mockups:
+
+- **Real cart** (`src/lib/cart-context.jsx`, `components/cart/CartDrawer.jsx`)
+  — Add to Bag genuinely adds items with size/colour, quantities adjust,
+  subtotal is real, and it persists across visits via localStorage.
+- **Real Paystack checkout** (`components/cart/PaystackCheckoutButton.jsx`)
+  — loads Paystack's actual Inline JS and opens a real payment popup.
+  Runs a demo/test flow until you set a real key in `src/data/site.js`
+  (see "Before you launch" above).
+- **Real form capture via Netlify Forms** — Contact, Create Your Edit,
+  Gifting, and the newsletter signup now submit to Netlify's built-in form
+  handling (`src/lib/netlify-forms.js` + the static detection file
+  `public/forms.html` — required because Netlify can't see JS-rendered
+  forms at build time; this is the documented workaround). Submissions land
+  in your Netlify dashboard once you turn Forms on (see "Deploy on
+  Netlify" above). The WhatsApp handoff still works alongside this — it's
+  additive, not a replacement.
+- **Real client-side search** (`components/search/SearchModal.jsx`) — the
+  navbar search icon now actually searches products, collections, and
+  journal articles.
+- **Save/resume on Create Your Edit** — progress saves to localStorage as
+  you go; leaving and coming back shows a "Welcome back" notice and picks
+  up where you left off.
+- **Scroll-reveal motion + hero parallax** (`components/ui/Reveal.jsx`,
+  `components/editorial/HeroParallaxImage.jsx`, via Framer Motion) —
+  homepage sections fade/rise into view on scroll; the hero image has a
+  subtle parallax. Both respect `prefers-reduced-motion`.
+- **Custom cursor** (`components/layout/CustomCursor.jsx`) — desktop only
+  (checks for a fine pointer), off on touch devices and when reduced
+  motion is preferred.
+- **A confirmation chime** (`src/lib/sound.js`) — a soft two-note tone,
+  synthesized with the Web Audio API on form/checkout success, so there's
+  no audio file to ship or break.
+- **Fuller content** — catalogue grew from 18 to 27 products (3 per
+  category), journal from 7 to 10 articles, and an About page "Meet Your
+  Curators" section (`src/data/curators.js`) gives the brief's repeated
+  "your Curator" language an actual face.
+
+**What this doesn't include, and why:** real photography (no photographer
+or licensed stock available to me), a live database or CMS, and live
+payment credentials — all called out with placeholders/TODOs at the
+relevant files rather than silently faked. Verified: production build
+succeeds (60 routes) and `eslint` runs clean.
+
+## Beyond this build
+
+Still open for a future pass: customer accounts, saved profiles/sizes
+tied to an account (rather than the anonymous localStorage cart), a CMS
+in place of `src/data/`, and server-side Paystack payment verification
+(the current integration is entirely client-side, which is normal for
+initiating a Paystack payment, but a production setup should verify the
+transaction server-side via a Netlify Function before marking an order
+complete).
 
 ## Since Stage 7
 
-- Every gradient placeholder was replaced with a real placehold.co image
-  (see the Photography section above) so the site has visible imagery
-  everywhere until real photography is ready.
+- Every placeholder now uses real photography from Lorem Picsum with a
+  brand-colour tint (see the Photography section above), replacing both
+  the original gradient blocks and an earlier flat-colour-plus-text
+  version that read as bland/empty — particularly in the hero, which also
+  had text duplicated inside the placeholder image itself.
+- Fixed the hero's vertical alignment: the text column was being centred
+  against a much taller image, leaving a large empty gap above the
+  headline on desktop. It now top-aligns instead.
 - The "style" question in both Create Your Edit and the Gift Edit form is
   now multi-select — customers can choose as many style words as apply
   (e.g. "Feminine" + "Minimal") instead of only one.

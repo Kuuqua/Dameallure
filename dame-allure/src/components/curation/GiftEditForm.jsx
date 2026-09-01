@@ -8,6 +8,8 @@ import OptionButton from "@/components/curation/OptionButton";
 import { budgetOptions, styleOptions } from "@/data/create-your-edit-options";
 import { submitGiftRequest, giftRequestWhatsAppLink } from "@/lib/gift-request";
 import { toggleValue } from "@/lib/array";
+import { submitToNetlify } from "@/lib/netlify-forms";
+import { playConfirmChime } from "@/lib/sound";
 
 const initialData = {
   recipient: "",
@@ -36,9 +38,10 @@ export default function GiftEditForm() {
     e.preventDefault();
     if (!canSubmit) return;
     setSubmitting(true);
-    await submitGiftRequest(data);
+    await Promise.all([submitGiftRequest(data), submitToNetlify("gift-edit", data)]);
     setSubmitting(false);
     setSubmitted(true);
+    playConfirmChime();
   };
 
   if (submitted) {

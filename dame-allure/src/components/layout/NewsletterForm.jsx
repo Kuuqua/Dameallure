@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { submitToNetlify } from "@/lib/netlify-forms";
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) return;
-    // Stub: swap for a real email/ESP endpoint later.
+    await submitToNetlify("newsletter", { email });
     setJoined(true);
   };
 

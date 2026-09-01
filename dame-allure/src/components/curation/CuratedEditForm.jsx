@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import StepIndicator from "@/components/ui/StepIndicator";
@@ -16,8 +16,11 @@ import {
   editRequestWhatsAppLink,
 } from "@/lib/create-edit-request";
 import { toggleValue } from "@/lib/array";
+import { submitToNetlify } from "@/lib/netlify-forms";
+import { playConfirmChime } from "@/lib/sound";
 
 const TOTAL_STEPS = 6;
+const STORAGE_KEY = "dame-allure-create-your-edit-draft";
 
 const initialData = {
   shoppingFor: "",
@@ -41,6 +44,35 @@ export default function CuratedEditForm({ initialOccasion = "" }) {
   const [step, setStep] = useState(1);
   const [data, setData] = useState({ ...initialData, occasion: initialOccasion });
   const [submitted, setSubmitted] = useState(false);
+  const [restored, setRestored] = useState(false);
+
+  // Resume an in-progress edit if the person left and came back.
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // One-time hydrate from localStorage on mount, not a reactive effect.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setData((prev) => ({ ...prev, ...parsed.data }));
+        setStep(parsed.step || 1);
+        setRestored(true);
+      }
+    } catch {
+      // ignore corrupt/unavailable storage
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Save progress as they go.
+  useEffect(() => {
+    if (submitted) return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ data, step }));
+    } catch {
+      // ignore write failures
+    }
+  }, [data, step, submitted]);
   const [submitting, setSubmitting] = useState(false);
 
   const update = (field, value) => setData((prev) => ({ ...prev, [field]: value }));
@@ -58,9 +90,15 @@ export default function CuratedEditForm({ initialOccasion = "" }) {
 
   const handleSubmit = async () => {
     setSubmitting(true);
-    await submitEditRequest(data);
+    await Promise.all([submitEditRequest(data), submitToNetlify("create-your-edit", data)]);
     setSubmitting(false);
     setSubmitted(true);
+    playConfirmChime();
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore
+    }
   };
 
   if (submitted) {
@@ -93,6 +131,11 @@ export default function CuratedEditForm({ initialOccasion = "" }) {
 
   return (
     <div className="max-w-lg">
+      {restored ? (
+        <p className="mb-6 border border-gold-deep/30 bg-gold-deep/5 px-4 py-3 text-[13px] text-plum">
+          Welcome back — picking up where you left off.
+        </p>
+      ) : null}
       <StepIndicator step={step} total={TOTAL_STEPS} />
 
       <div className="mt-10 min-h-[280px]">

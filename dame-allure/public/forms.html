@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Dame Allure — form definitions</title></head>
+<body>
+  <!--
+    This page is never linked to and never seen by visitors. Netlify's
+    build bot can't execute JavaScript, so it can't discover forms that
+    React renders client-side — this static file is the documented
+    workaround: it lists every form + field name so Netlify registers
+    them, then the real React forms (see src/lib/netlify-forms.js) submit
+    to these same form names via fetch().
+  -->
+
+  <form name="create-your-edit" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="shoppingFor" />
+    <input name="occasion" />
+    <input name="budget" />
+    <input name="style" />
+    <input name="clothingSize" />
+    <input name="shoeSize" />
+    <input name="preferredColours" />
+    <input name="coloursToAvoid" />
+    <input name="fragrancePreference" />
+    <input name="specialRequests" />
+    <input name="requiredDate" />
+    <input name="deliveryLocation" />
+    <input name="name" />
+    <input name="phone" />
+    <input name="email" />
+  </form>
+
+  <form name="gift-edit" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="recipient" />
+    <input name="occasion" />
+    <input name="budget" />
+    <input name="style" />
+    <input name="colours" />
+    <input name="personalMessage" />
+    <input name="deliveryDate" />
+    <input name="name" />
+    <input name="phone" />
+  </form>
+
+  <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="name" />
+    <input name="email" />
+    <input name="message" />
+  </form>
+
+  <form name="newsletter" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="email" />
+  </form>
+</body>
+</html>

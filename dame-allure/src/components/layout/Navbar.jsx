@@ -5,9 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { Search, ShoppingBag, Menu, X, MessageCircle } from "lucide-react";
 import { primaryNav, whatsappLink } from "@/data/site";
+import { useCart } from "@/lib/cart-context";
+import SearchModal from "@/components/search/SearchModal";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const { count, setOpen: setCartOpen } = useCart();
 
   return (
     <header className="sticky top-0 z-50 border-b border-plum/10 bg-ivory/95 backdrop-blur">
@@ -48,17 +52,24 @@ export default function Navbar() {
           <button
             type="button"
             aria-label="Search"
+            onClick={() => setSearchOpen(true)}
             className="text-plum/80 transition-colors hover:text-plum"
           >
             <Search size={20} strokeWidth={1.5} />
           </button>
-          <Link
-            href="/bag"
-            aria-label="Shopping bag"
-            className="text-plum/80 transition-colors hover:text-plum"
+          <button
+            type="button"
+            aria-label={`Shopping bag${count ? `, ${count} items` : ""}`}
+            onClick={() => setCartOpen(true)}
+            className="relative text-plum/80 transition-colors hover:text-plum"
           >
             <ShoppingBag size={20} strokeWidth={1.5} />
-          </Link>
+            {count > 0 ? (
+              <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center bg-plum px-1 text-[9px] font-medium text-ivory">
+                {count}
+              </span>
+            ) : null}
+          </button>
           <button
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -91,6 +102,8 @@ export default function Navbar() {
           </ul>
         </nav>
       ) : null}
+
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }

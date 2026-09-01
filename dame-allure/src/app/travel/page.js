@@ -1,8 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 import Button from "@/components/ui/Button";
 import CategoryTile from "@/components/shop/CategoryTile";
-import { placeholderImage } from "@/lib/placeholder";
+import PlaceholderPhoto from "@/components/ui/PlaceholderPhoto";
 
 const travelCategories = [
   { slug: "vacation-edit", label: "Vacation Fashion", copy: "Everything she needs to travel beautifully." },
@@ -39,17 +38,11 @@ export default function TravelPage() {
           </div>
           <div className="md:col-span-5">
             <div className="relative aspect-[4/3] w-full overflow-hidden">
-              <Image
-                src={placeholderImage({
-                  width: 800,
-                  height: 600,
-                  label: "Travel",
-                  seed: "travel-hero",
-                })}
-                alt=""
-                fill
+              <PlaceholderPhoto
+                seed="travel-hero"
+                width={800}
+                height={600}
                 sizes="(min-width: 768px) 40vw, 100vw"
-                className="object-cover"
               />
             </div>
           </div>

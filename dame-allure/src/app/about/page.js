@@ -1,5 +1,7 @@
 import Link from "next/link";
 import CTASection from "@/components/editorial/CTASection";
+import ProductImagePlaceholder from "@/components/shop/ProductImagePlaceholder";
+import { curators } from "@/data/curators";
 
 export const metadata = {
   title: "About",
@@ -57,6 +59,34 @@ export default function AboutPage() {
             <br />
             Every detail is intentional.
           </p>
+        </div>
+      </section>
+
+      <section className="container-edit py-14 md:py-20">
+        <div className="max-w-xl">
+          <p className="text-[12px] uppercase tracking-[0.15em] text-gold-deep">
+            Meet Your Curators
+          </p>
+          <h2 className="mt-4 font-display text-3xl text-plum md:text-4xl">
+            The people behind &ldquo;your Curator.&rdquo;
+          </h2>
+          <p className="mt-3 text-[15px] text-charcoal/80">
+            Every Edit is reviewed by a person, not an algorithm.
+          </p>
+        </div>
+        <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-3">
+          {curators.map((curator) => (
+            <div key={curator.slug}>
+              <ProductImagePlaceholder seed={curator.slug} className="aspect-[4/5]" />
+              <h3 className="mt-4 font-display text-xl text-plum">{curator.name}</h3>
+              <p className="mt-1 text-[12px] uppercase tracking-[0.08em] text-gold-deep">
+                {curator.role}
+              </p>
+              <p className="mt-3 text-[14px] leading-relaxed text-charcoal/80">
+                {curator.bio}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 

@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { placeholderImage } from "@/lib/placeholder";
+import PlaceholderPhoto from "@/components/ui/PlaceholderPhoto";
 
 const details = [
   "Premium rigid boxes",
@@ -15,17 +14,11 @@ export default function PackagingShowcase() {
       <div className="container-edit grid grid-cols-1 gap-12 md:grid-cols-12 md:items-center">
         <div className="md:col-span-6">
           <div className="relative aspect-[4/5] w-full overflow-hidden">
-            <Image
-              src={placeholderImage({
-                width: 900,
-                height: 1125,
-                label: "Packaging",
-                seed: "packaging",
-              })}
-              alt=""
-              fill
+            <PlaceholderPhoto
+              seed="packaging"
+              width={900}
+              height={1125}
               sizes="(min-width: 768px) 45vw, 100vw"
-              className="object-cover"
             />
           </div>
         </div>

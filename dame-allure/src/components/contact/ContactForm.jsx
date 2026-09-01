@@ -4,6 +4,8 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
+import { submitToNetlify } from "@/lib/netlify-forms";
+import { playConfirmChime } from "@/lib/sound";
 
 export default function ContactForm() {
   const [data, setData] = useState({ name: "", email: "", message: "" });
@@ -17,10 +19,10 @@ export default function ContactForm() {
     e.preventDefault();
     if (!canSubmit) return;
     setSubmitting(true);
-    // Stub: swap for a real email/CRM endpoint later.
-    await new Promise((resolve) => setTimeout(resolve, 400));
+    await submitToNetlify("contact", data);
     setSubmitting(false);
     setSubmitted(true);
+    playConfirmChime();
   };
 
   if (submitted) {
