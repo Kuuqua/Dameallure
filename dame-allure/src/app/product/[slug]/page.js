@@ -1,0 +1,112 @@
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { products, getProduct } from "@/data/products";
+import { getCategory } from "@/data/shop-categories";
+import ProductImagePlaceholder from "@/components/shop/ProductImagePlaceholder";
+import ProductOptions from "@/components/shop/ProductOptions";
+import Accordion from "@/components/ui/Accordion";
+import ProductGrid from "@/components/shop/ProductGrid";
+
+export function generateStaticParams() {
+  return products.map((p) => ({ slug: p.slug }));
+}
+
+export function generateMetadata({ params }) {
+  const product = getProduct(params.slug);
+  if (!product) return {};
+  return {
+    title: product.name,
+    description: product.shortDescription,
+  };
+}
+
+export default function ProductDetailPage({ params }) {
+  const product = getProduct(params.slug);
+  if (!product) notFound();
+
+  const category = getCategory(product.category);
+  const related = products
+    .filter((p) => p.category === product.category && p.slug !== product.slug)
+    .slice(0, 4);
+
+  const infoItems = [
+    { title: "Material & Fabric", content: product.material },
+    { title: "Care Information", content: product.care },
+    {
+      title: "Delivery Information",
+      content:
+        "Delivered within Accra in 1–3 business days; nationwide and made-to-order pieces may take longer. Delivery timelines are confirmed at checkout or via WhatsApp.",
+    },
+    {
+      title: "Returns & Exchanges",
+      content:
+        "Ready-to-wear pieces can be exchanged within 7 days if unworn and in original packaging. Made-to-order and personalised pieces are final sale.",
+    },
+  ];
+
+  return (
+    <>
+      <section className="container-edit pt-14 md:pt-20">
+        {category ? (
+          <Link
+            href={`/shop/${category.slug}`}
+            className="text-[12px] uppercase tracking-[0.08em] text-plum/70 hover:text-plum"
+          >
+            ← {category.label}
+          </Link>
+        ) : null}
+
+        <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-14">
+          <div>
+            <ProductImagePlaceholder seed={product.slug} className="aspect-[4/5] md:aspect-[3/4]" />
+          </div>
+
+          <div className="max-w-md">
+            <h1 className="font-display text-3xl text-plum md:text-4xl">
+              {product.name}
+            </h1>
+            <p className="mt-2 text-[18px] text-charcoal">
+              GH₵{product.price.toLocaleString()}
+            </p>
+            <p className="mt-1 text-[12px] uppercase tracking-[0.06em] text-gold-deep">
+              {product.availability}
+            </p>
+            <p className="mt-5 text-[15px] leading-relaxed text-charcoal/75">
+              {product.description}
+            </p>
+
+            <div className="mt-8">
+              <ProductOptions product={product} />
+            </div>
+
+            <div className="mt-10 border-t border-plum/15 pt-6">
+              <p className="text-[13px] text-charcoal/80">
+                Not sure this is right for her?{" "}
+                <span className="font-medium text-plum">Need help choosing?</span>
+              </p>
+              <a
+                href="#"
+                className="mt-2 inline-block text-[12px] uppercase tracking-[0.08em] text-plum/70 underline decoration-gold underline-offset-4 hover:text-plum"
+              >
+                Ask a Dame Allure Curator on WhatsApp
+              </a>
+            </div>
+
+            <div className="mt-10">
+              <Accordion items={infoItems} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {related.length ? (
+        <section className="container-edit py-16 md:py-24">
+          <h2 className="mb-8 font-display text-2xl text-plum">
+            More from {category?.label}
+          </h2>
+          <ProductGrid products={related} />
+        </section>
+      ) : null}
+    </>
+  );
+}

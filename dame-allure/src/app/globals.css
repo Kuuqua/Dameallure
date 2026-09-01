@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+:root {
+  --ivory: #f7f3ef;
+  --ivory-dim: #f1ebe3;
+  --plum: #4b1e3f;
+  --plum-deep: #34152c;
+  --gold: #c8a352;
+  --gold-soft: #dcc38b;
+  --gold-deep: #7d5f29;
+  --charcoal: #3a3a3a;
+  --navy: #1e2a52;
+}
+
+@theme inline {
+  --color-ivory: var(--ivory);
+  --color-ivory-dim: var(--ivory-dim);
+  --color-plum: var(--plum);
+  --color-plum-deep: var(--plum-deep);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
+  --color-charcoal: var(--charcoal);
+  --color-navy: var(--navy);
+
+  --font-display: var(--font-playfair);
+  --font-sans: var(--font-inter);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--ivory);
+    color: var(--charcoal);
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--plum);
+    letter-spacing: 0.01em;
+  }
+
+  ::selection {
+    background: var(--gold-soft);
+    color: var(--plum-deep);
+  }
+
+  a, button {
+    outline-offset: 2px;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .container-edit {
+    max-width: 1360px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-edit {
+      padding-inline: 3rem;
+    }
+  }
+
+  .rule-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
