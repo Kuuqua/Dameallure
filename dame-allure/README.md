@@ -254,6 +254,25 @@ initiating a Paystack payment, but a production setup should verify the
 transaction server-side via a Netlify Function before marking an order
 complete).
 
+## Homepage refinements (targeted, not a rebuild)
+
+- Hero eyebrow → "A Women's Lifestyle Destination"; secondary CTA →
+  "Explore Dame Allure" (now points to `/shop`, broader than the old
+  Collections-only link, matching the broader phrasing)
+- Hero image swapped to less travel-specific keywords
+  (`fashionmodel,editorial,confidentwoman`) — see the caveat below
+- New homepage section between the hero and "What Are You Preparing
+  For?": **"More than a wardrobe. A world curated around her."** — six
+  tiles (Clothing, Shoes & Bags, Jewellery & Accessories, Beauty &
+  Self-Care, Travel, Gifts) linking into Shop
+  (`src/components/home/MoreThanAWardrobe.jsx`,
+  `src/data/lifestyle-categories.js`)
+- "Shoes & Bags" has no single matching department, so that tile links
+  to `/shop` generally rather than favouring one — flagged in the data
+  file's comment if you'd rather point it somewhere specific
+- Everything else on the homepage (What Are You Preparing For, the
+  philosophy quote, Exclusives, Create Your Curation CTA) is unchanged
+
 ## Since the amendment
 
 - **Fixed real dead links:** the footer's Delivery, Returns, Privacy and

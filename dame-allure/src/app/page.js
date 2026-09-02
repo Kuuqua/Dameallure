@@ -1,4 +1,5 @@
 import Hero from "@/components/editorial/Hero";
+import MoreThanAWardrobe from "@/components/home/MoreThanAWardrobe";
 import PreparingFor from "@/components/home/PreparingFor";
 import PhilosophyQuote from "@/components/editorial/PhilosophyQuote";
 import Exclusives from "@/components/editorial/Exclusives";
@@ -9,6 +10,9 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Reveal>
+        <MoreThanAWardrobe />
+      </Reveal>
       <Reveal>
         <PreparingFor />
       </Reveal>

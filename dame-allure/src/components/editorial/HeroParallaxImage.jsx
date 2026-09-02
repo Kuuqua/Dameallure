@@ -17,8 +17,8 @@ export default function HeroParallaxImage() {
     <div ref={ref} className="relative aspect-[4/5] w-full overflow-hidden rounded-sm md:aspect-[5/6]">
       <motion.div style={{ y }} className="absolute inset-0 h-[112%]">
         <PlaceholderPhoto
-          seed="hero"
-          keywords="fashion,editorial,woman,portrait"
+          seed="hero-lifestyle-campaign"
+          keywords="fashionmodel,editorial,confidentwoman"
           width={1000}
           height={1250}
           priority

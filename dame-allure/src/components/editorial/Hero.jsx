@@ -6,7 +6,7 @@ export default function Hero() {
     <section className="container-edit grid grid-cols-1 items-start gap-12 pb-16 pt-10 md:grid-cols-12 md:gap-8 md:pb-24 md:pt-14">
       <div className="order-2 md:order-1 md:col-span-5 md:pt-10">
         <p className="mb-5 text-[12px] tracking-[0.15em] text-gold-deep">
-          A curated lifestyle brand
+          A Women&apos;s Lifestyle Destination
         </p>
         <h1 className="font-display text-5xl leading-[0.95] text-plum sm:text-6xl md:text-[3.4rem] lg:text-[3.8rem]">
           Dame Allure
@@ -25,8 +25,8 @@ export default function Hero() {
           <Button href="/create-your-curation" variant="primary">
             Create Your Curation
           </Button>
-          <Button href="/collections" variant="secondary">
-            Explore The Collection
+          <Button href="/shop" variant="secondary">
+            Explore Dame Allure
           </Button>
         </div>
       </div>
