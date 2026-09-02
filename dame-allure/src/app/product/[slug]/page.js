@@ -4,7 +4,7 @@ import { getDepartment } from "@/data/shop-taxonomy";
 import { whatsappLink } from "@/data/site";
 import { completeTheLook } from "@/data/complete-the-look";
 import Breadcrumbs from "@/components/shop/Breadcrumbs";
-import ProductImagePlaceholder from "@/components/shop/ProductImagePlaceholder";
+import ProductGallery from "@/components/shop/ProductGallery";
 import ProductBadge from "@/components/shop/ProductBadge";
 import ProductOptions from "@/components/shop/ProductOptions";
 import CompleteTheLook from "@/components/shop/CompleteTheLook";
@@ -66,7 +66,7 @@ export default function ProductDetailPage({ params }) {
 
         <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-14">
           <div>
-            <ProductImagePlaceholder seed={product.slug} keywords={product.imageKeywords} className="aspect-[4/5] md:aspect-[3/4]" />
+            <ProductGallery slug={product.slug} keywords={product.imageKeywords} className="aspect-[4/5] md:aspect-[3/4]" />
           </div>
 
           <div className="max-w-md">

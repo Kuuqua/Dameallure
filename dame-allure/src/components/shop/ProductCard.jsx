@@ -27,7 +27,7 @@ export default function ProductCard({ product }) {
             ) : null}
           </div>
 
-          <div className="absolute right-3 top-3 flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
+          <div className="absolute right-3 top-3 flex flex-col gap-2 opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100 md:focus-within:opacity-100">
             <button
               type="button"
               aria-label={saved ? "Remove from wishlist" : "Save to wishlist"}
@@ -60,7 +60,9 @@ export default function ProductCard({ product }) {
           <div className="mt-2 flex items-center justify-between">
             <span className="text-[14px] text-charcoal">
               GH₵{product.price.toLocaleString()}
-              {product.colors?.length > 1 ? (
+              {product.colors?.length === 1 && product.colors[0] !== "—" ? (
+                <span className="ml-2 text-[11px] text-charcoal/50">{product.colors[0]}</span>
+              ) : product.colors?.length > 1 ? (
                 <span className="ml-2 text-[11px] text-charcoal/50">
                   {product.colors.length} colours
                 </span>

@@ -254,6 +254,47 @@ initiating a Paystack payment, but a production setup should verify the
 transaction server-side via a Netlify Function before marking an order
 complete).
 
+## Both remaining gaps closed
+
+- **Product image galleries.** Every product page now has a main image
+  plus a 3-thumbnail strip (`ProductGallery.jsx`) — click a thumbnail to
+  swap the main image. Real limitation, stated plainly: since there's no
+  actual product yet, these are 3 different stock photos matching the
+  same keywords, not genuine multiple angles of one item — that's not
+  achievable with placeholder photography. The mechanism (main image +
+  thumbnails + click-to-swap) is real and production-ready; once real
+  photography exists, swap `ProductGallery`'s seed array for real image
+  URLs and nothing else needs to change.
+- **Complete The Look extended from 4 to all 11 clothing pieces** in the
+  catalogue (`complete-the-look.js`) — every dress, top, skirt, set,
+  trouser, blazer, nightwear, and swimwear piece now has a curated
+  companion bundle. Scoped to garments deliberately: a candle or a
+  luggage tag doesn't need an outfit bundle the way a dress does, so
+  those 21 non-clothing products don't have one, by design rather than
+  oversight.
+
+## Post-delivery audit fixes
+
+A direct re-check against the shop architecture spec turned up three real
+gaps, now fixed:
+
+- Wishlist and Quick View buttons on product cards only appeared on
+  `:hover` — invisible (though still technically tappable) on touch
+  devices, i.e. broken on actual phones. Now always visible below the
+  `md` breakpoint, hover-reveal only on pointer-capable screens.
+- The wishlist icon in the nav was hidden below the `sm` breakpoint —
+  gone on real phone widths. Now visible at every size (unlike WhatsApp,
+  wishlist has no floating-button fallback for mobile).
+- No Brand/Collaboration filter existed in the filter panel despite being
+  listed in the spec and already present in the product data model. Added
+  — it won't visibly appear yet since every product currently shares the
+  same brand and no collaboration, but the mechanism is wired for when
+  that data diversifies.
+
+Also tightened: product cards now show the actual colour name when a
+product has one (not just a count), closer to "available colour where
+relevant" as literally specified.
+
 ## Shop architecture rebuild
 
 Full Shop taxonomy and e-commerce architecture, per spec:

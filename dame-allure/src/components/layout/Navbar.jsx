@@ -83,7 +83,7 @@ export default function Navbar() {
           <Link
             href="/wishlist"
             aria-label={`Wishlist${wishlistCount ? `, ${wishlistCount} items` : ""}`}
-            className="relative hidden text-plum/80 transition-colors hover:text-plum sm:block"
+            className="relative text-plum/80 transition-colors hover:text-plum"
           >
             <Heart size={20} strokeWidth={1.5} />
             {wishlistCount > 0 ? (
