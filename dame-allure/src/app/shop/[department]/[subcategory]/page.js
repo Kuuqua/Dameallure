@@ -21,10 +21,11 @@ export function generateStaticParams() {
   );
 }
 
-export function generateMetadata({ params }) {
-  const department = getDepartment(params.department);
+export async function generateMetadata({ params }) {
+  const { department: departmentSlug, subcategory: subcategorySlug } = await params;
+  const department = getDepartment(departmentSlug);
   if (!department) return {};
-  const subcategory = findSubcategoryByRouteSlug(department, params.subcategory);
+  const subcategory = findSubcategoryByRouteSlug(department, subcategorySlug);
   if (!subcategory) return {};
   return {
     title: `${subcategory} — ${department.label}`,
@@ -32,10 +33,11 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function ShopSubcategoryPage({ params }) {
-  const department = getDepartment(params.department);
+export default async function ShopSubcategoryPage({ params }) {
+  const { department: departmentSlug, subcategory: subcategorySlug } = await params;
+  const department = getDepartment(departmentSlug);
   if (!department) notFound();
-  const subcategory = findSubcategoryByRouteSlug(department, params.subcategory);
+  const subcategory = findSubcategoryByRouteSlug(department, subcategorySlug);
   if (!subcategory) notFound();
 
   const items = getProductsBySubcategory(department.slug, subcategory);

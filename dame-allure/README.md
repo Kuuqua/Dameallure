@@ -254,6 +254,39 @@ initiating a Paystack payment, but a production setup should verify the
 transaction server-side via a Netlify Function before marking an order
 complete).
 
+## Real bugs found and fixed (not a deploy-lag issue this time)
+
+Your report of `/shop/clothing` 404ing led to finding two genuine defects:
+
+1. **Route conflict**: a static route (`/shop/new-arrivals/page.js`) sat
+   directly alongside a dynamic route (`/shop/[department]/page.js`) at
+   the same directory level — an invalid Next.js App Router combination.
+   Fixed by folding New Arrivals into the dynamic route itself
+   (`src/app/shop/[department]/page.js`); the URL is unchanged.
+2. **The actual root cause**: this Next.js version requires `params` and
+   `searchParams` to be `await`ed in Server Components (an async API
+   change) — every dynamic page in the project (`product/[slug]`,
+   `journal/[slug]`, `shop-by-occasion/[occasion]`, `shop/[department]`,
+   `shop/[department]/[subcategory]`, plus `create-your-curation`'s
+   `searchParams` usage) was reading them synchronously, which silently
+   returned `undefined` and triggered `notFound()` on **every single
+   dynamic route in the app** — not just Shop. Fixed across all 6 files.
+
+**How this was verified**, properly this time: built the production
+bundle, ran the actual `next start` server locally, and sent real HTTP
+requests to every Shop link, all 13 Clothing subcategories, plus
+products/journal/occasions/static pages — all returned genuine 200s, not
+just "the file exists on disk."
+
+**A second problem found while re-verifying**: `layout.js`'s Google Fonts
+loading had been silently broken for several prior updates — a
+strip-for-local-testing/restore-before-packaging process failed at some
+point and the broken version kept getting carried forward as if it were
+correct. Rebuilt `layout.js` from scratch and confirmed the restoration
+three independent ways (grep for the font import, diff against the
+pre-strip version, and unzipping the actual delivered file to check it
+directly) before packaging this zip.
+
 ## Shop category pages rebuild (URL & filter overhaul)
 
 A more detailed category-page spec came in after the first shop rebuild,

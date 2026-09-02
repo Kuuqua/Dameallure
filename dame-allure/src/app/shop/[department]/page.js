@@ -6,19 +6,32 @@ import {
   getSubcategorySlug,
   getDepartmentFilters,
 } from "@/data/shop-taxonomy";
-import { getProductsByDepartment } from "@/data/products";
+import { getProductsByDepartment, getNewArrivals } from "@/data/products";
 import { occasions } from "@/data/occasions";
 import Breadcrumbs from "@/components/shop/Breadcrumbs";
 import ShopProductBrowser from "@/components/shop/ShopProductBrowser";
 import ProductGrid from "@/components/shop/ProductGrid";
 import CTASection from "@/components/editorial/CTASection";
 
+// "new-arrivals" is handled inside this same dynamic route rather than as
+// a separate static sibling page — a static route and a dynamic route at
+// the same directory level (/shop/new-arrivals/page.js next to
+// /shop/[department]/page.js) is a known Next.js App Router conflict
+// that breaks routing for the *whole* dynamic segment, not just the
+// colliding name. Folding it in here avoids that entirely.
 export function generateStaticParams() {
-  return departments.map((d) => ({ department: d.slug }));
+  return [...departments.map((d) => ({ department: d.slug })), { department: "new-arrivals" }];
 }
 
-export function generateMetadata({ params }) {
-  const department = getDepartment(params.department);
+export async function generateMetadata({ params }) {
+  const { department: departmentSlug } = await params;
+  if (departmentSlug === "new-arrivals") {
+    return {
+      title: "New Arrivals",
+      description: "The newest pieces at Dame Allure.",
+    };
+  }
+  const department = getDepartment(departmentSlug);
   if (!department) return {};
   return {
     title: department.label,
@@ -26,8 +39,33 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function ShopDepartmentPage({ params }) {
-  const department = getDepartment(params.department);
+export default async function ShopDepartmentPage({ params }) {
+  const { department: departmentSlug } = await params;
+  if (departmentSlug === "new-arrivals") {
+    const items = getNewArrivals();
+    return (
+      <>
+        <section className="container-edit pb-6 pt-10 md:pt-14">
+          <Breadcrumbs items={[{ label: "Shop", href: "/shop" }, { label: "New Arrivals" }]} />
+          <h1 className="mt-4 font-display text-4xl text-plum md:text-5xl">New Arrivals</h1>
+          <p className="mt-3 max-w-lg text-[15px] text-charcoal/80">
+            The newest additions, across every category.
+          </p>
+        </section>
+
+        <section className="container-edit py-10 md:py-14">
+          <ShopProductBrowser
+            products={items}
+            emptyStateProps={{ ctaLabel: "Explore The Shop", ctaHref: "/shop" }}
+          />
+        </section>
+
+        <CTASection />
+      </>
+    );
+  }
+
+  const department = getDepartment(departmentSlug);
   if (!department) notFound();
 
   const items = getProductsByDepartment(department.slug);

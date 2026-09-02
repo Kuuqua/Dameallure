@@ -6,9 +6,10 @@ export const metadata = {
     "Tell us what you need. We'll curate the rest. Your Dame Allure Curator reviews every request personally.",
 };
 
-export default function CreateYourCurationPage({ searchParams }) {
+export default async function CreateYourCurationPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
   const initialOccasion =
-    typeof searchParams?.occasion === "string" ? searchParams.occasion : "";
+    typeof resolvedSearchParams?.occasion === "string" ? resolvedSearchParams.occasion : "";
 
   return (
     <section className="container-edit py-14 md:py-20">

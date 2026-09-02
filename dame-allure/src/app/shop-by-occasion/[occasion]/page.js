@@ -14,8 +14,9 @@ export function generateStaticParams() {
   return routedOccasions.map((o) => ({ occasion: o.key }));
 }
 
-export function generateMetadata({ params }) {
-  const occasion = routedOccasions.find((o) => o.key === params.occasion);
+export async function generateMetadata({ params }) {
+  const { occasion: occasionKey } = await params;
+  const occasion = routedOccasions.find((o) => o.key === occasionKey);
   if (!occasion) return {};
   return {
     title: occasion.label,
@@ -23,8 +24,9 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function ShopByOccasionDetailPage({ params }) {
-  const occasion = routedOccasions.find((o) => o.key === params.occasion);
+export default async function ShopByOccasionDetailPage({ params }) {
+  const { occasion: occasionKey } = await params;
+  const occasion = routedOccasions.find((o) => o.key === occasionKey);
   if (!occasion) notFound();
 
   const items = getProductsByOccasion(occasion.label);
