@@ -7,7 +7,7 @@ import CTASection from "@/components/editorial/CTASection";
 export const metadata = {
   title: "Collections",
   description:
-    "The Dame Allure Signature Collection, and strategic collaborations with Ghanaian creatives — Odehei and Renee Royale.",
+    "The Dame Allure Signature Collection, and strategic collaborations with Ghanaian and Nigerian creatives — Odehei and Renee Royale.",
 };
 
 export default function CollectionsPage() {
@@ -68,7 +68,7 @@ export default function CollectionsPage() {
             Dame Allure Exclusives
           </h2>
           <p className="mt-3 text-[15px] text-charcoal/80">
-            Thoughtfully designed in collaboration with selected Ghanaian
+            Thoughtfully designed in collaboration with selected Ghanaian and Nigerian
             creatives — Dame Allure remains the hero brand throughout.
           </p>
         </div>
