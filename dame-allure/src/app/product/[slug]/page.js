@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { products, getProduct } from "@/data/products";
-import { getCategory } from "@/data/shop-categories";
+import { getDepartment } from "@/data/shop-taxonomy";
+import { whatsappLink } from "@/data/site";
 import ProductImagePlaceholder from "@/components/shop/ProductImagePlaceholder";
 import ProductOptions from "@/components/shop/ProductOptions";
 import Accordion from "@/components/ui/Accordion";
@@ -24,9 +25,9 @@ export default function ProductDetailPage({ params }) {
   const product = getProduct(params.slug);
   if (!product) notFound();
 
-  const category = getCategory(product.category);
+  const department = getDepartment(product.department);
   const related = products
-    .filter((p) => p.category === product.category && p.slug !== product.slug)
+    .filter((p) => p.department === product.department && p.slug !== product.slug)
     .slice(0, 4);
 
   const infoItems = [
@@ -47,12 +48,12 @@ export default function ProductDetailPage({ params }) {
   return (
     <>
       <section className="container-edit pt-14 md:pt-20">
-        {category ? (
+        {department ? (
           <Link
-            href={`/shop/${category.slug}`}
+            href={`/shop/${department.slug}`}
             className="text-[12px] uppercase tracking-[0.08em] text-plum/70 hover:text-plum"
           >
-            ← {category.label}
+            ← {department.label}
           </Link>
         ) : null}
 
@@ -85,10 +86,12 @@ export default function ProductDetailPage({ params }) {
                 <span className="font-medium text-plum">Need help choosing?</span>
               </p>
               <a
-                href="#"
+                href={whatsappLink(`Hi Dame Allure, I'd like help choosing "${product.name}".`)}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-2 inline-block text-[12px] uppercase tracking-[0.08em] text-plum/70 underline decoration-gold underline-offset-4 hover:text-plum"
               >
-                Ask a Dame Allure Curator on WhatsApp
+                Ask a Curator on WhatsApp
               </a>
             </div>
 
@@ -102,7 +105,7 @@ export default function ProductDetailPage({ params }) {
       {related.length ? (
         <section className="container-edit py-16 md:py-24">
           <h2 className="mb-8 font-display text-2xl text-plum">
-            More from {category?.label}
+            More from {department?.label}
           </h2>
           <ProductGrid products={related} />
         </section>

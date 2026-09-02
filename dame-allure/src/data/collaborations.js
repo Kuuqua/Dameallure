@@ -4,13 +4,13 @@ export const collaborations = [
     partner: "Odehei",
     title: "Dame Allure × Odehei",
     copy: "Modern African fashion.",
-    href: "/shop/odehei",
+    href: "/shop",
   },
   {
     key: "renee-royale",
     partner: "Renee Royale",
     title: "Dame Allure × Renee Royale",
     copy: "Handcrafted accessories.",
-    href: "/shop/renee-royale",
+    href: "/shop",
   },
 ];

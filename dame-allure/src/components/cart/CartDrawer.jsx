@@ -33,7 +33,7 @@ export default function CartDrawer() {
                 collections
               </Link>{" "}
               or let a Curator{" "}
-              <Link href="/create-your-edit" onClick={() => setOpen(false)} className="underline decoration-gold underline-offset-4">
+              <Link href="/create-your-curation" onClick={() => setOpen(false)} className="underline decoration-gold underline-offset-4">
                 build an edit for you
               </Link>
               .

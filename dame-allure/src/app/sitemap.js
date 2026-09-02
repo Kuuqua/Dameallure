@@ -1,4 +1,5 @@
-import { shopCategories } from "@/data/shop-categories";
+import { departments } from "@/data/shop-taxonomy";
+import { occasions } from "@/data/occasions";
 import { products } from "@/data/products";
 import { journalArticles } from "@/data/journal";
 
@@ -8,7 +9,9 @@ export default function sitemap() {
   const staticRoutes = [
     "",
     "/shop",
-    "/create-your-edit",
+    "/shop-by-occasion",
+    "/collections",
+    "/create-your-curation",
     "/travel",
     "/gifting",
     "/curation-experience",
@@ -21,11 +24,19 @@ export default function sitemap() {
     priority: path === "" ? 1 : 0.8,
   }));
 
-  const categoryRoutes = shopCategories.map((c) => ({
-    url: `${BASE_URL}/shop/${c.slug}`,
+  const departmentRoutes = departments.map((d) => ({
+    url: `${BASE_URL}/shop/${d.slug}`,
     changeFrequency: "weekly",
     priority: 0.7,
   }));
+
+  const occasionRoutes = occasions
+    .filter((o) => o.href === `/shop-by-occasion/${o.key}`)
+    .map((o) => ({
+      url: `${BASE_URL}${o.href}`,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    }));
 
   const productRoutes = products.map((p) => ({
     url: `${BASE_URL}/product/${p.slug}`,
@@ -39,5 +50,11 @@ export default function sitemap() {
     priority: 0.5,
   }));
 
-  return [...staticRoutes, ...categoryRoutes, ...productRoutes, ...journalRoutes];
+  return [
+    ...staticRoutes,
+    ...departmentRoutes,
+    ...occasionRoutes,
+    ...productRoutes,
+    ...journalRoutes,
+  ];
 }

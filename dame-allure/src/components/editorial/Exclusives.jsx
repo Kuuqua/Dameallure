@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { collaborations } from "@/data/collaborations";
 import CollaborationCard from "@/components/brand/CollaborationCard";
 
@@ -24,6 +25,15 @@ export default function Exclusives() {
           />
         ))}
       </div>
+
+      <p className="mt-8">
+        <Link
+          href="/collections"
+          className="text-[12px] uppercase tracking-[0.08em] text-plum/70 underline decoration-gold underline-offset-4 hover:text-plum"
+        >
+          View all collections
+        </Link>
+      </p>
     </section>
   );
 }

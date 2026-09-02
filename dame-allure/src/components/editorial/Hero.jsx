@@ -14,16 +14,19 @@ export default function Hero() {
         <p className="mt-3 font-display text-2xl italic text-plum/80 md:text-3xl">
           Curated for her.
         </p>
-        <p className="mt-6 max-w-md text-[15px] leading-relaxed text-charcoal/75">
+        <p className="mt-6 max-w-md font-display text-xl text-plum md:text-2xl">
+          Everything she needs, thoughtfully curated.
+        </p>
+        <p className="mt-4 max-w-md text-[15px] leading-relaxed text-charcoal/75">
           Fashion, lifestyle and thoughtful experiences curated around the
           woman you are — and the life you&apos;re living.
         </p>
         <div className="mt-9 flex flex-wrap gap-4">
-          <Button href="/create-your-edit" variant="primary">
-            Create Your Edit
+          <Button href="/create-your-curation" variant="primary">
+            Create Your Curation
           </Button>
-          <Button href="/shop" variant="secondary">
-            Explore The Collections
+          <Button href="/collections" variant="secondary">
+            Explore The Collection
           </Button>
         </div>
       </div>

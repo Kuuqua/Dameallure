@@ -13,6 +13,35 @@ npm run dev
 
 Open http://localhost:3000
 
+## Brand amendment — complete
+
+The brief was amended: "Edit" → "Curation" terminology, Shop restructured
+into real product categories with a separate Shop by Occasion experience,
+and a new Collections section. Both passes are in this delivery:
+
+- **Terminology & forms:** every "Edit" renamed to "Curation" site-wide,
+  the new 9-step Create Your Curation form, the reworked Gift Curation
+  form, "Ask a Curator" wording.
+- **Shop, restructured:** `/shop` now organizes by real product department
+  (Clothing, Shoes, Bags, Jewellery & Accessories, Beauty & Self-Care,
+  Travel, Gifts — `src/data/shop-taxonomy.js`), with subcategory filter
+  chips on each department page rather than a separate static page per
+  subcategory (there are ~45 subcategories across departments — one page
+  each would be over-engineering for an MVP catalogue this size; chips get
+  the same browsing outcome without the page explosion).
+- **Shop By Occasion, genuinely separate from Shop:** `/shop-by-occasion`
+  lists all nine situations from the brief; seven route to their own page
+  pulling matching products via each product's `occasions` array
+  (`src/data/products.js`); Travel and Gifting route to their existing
+  dedicated pages instead of a duplicate listing.
+- **Collections:** `/collections` — the Signature Collection plus the
+  Odehei and Renee Royale collaborations.
+- All 27 products re-tagged with department + subcategory + occasions
+  (a product can appear in both a department page and an occasion page,
+  same as the brief's Vacation example).
+
+Verified: production build succeeds (67 routes) and `eslint` runs clean.
+
 ## Deploy on Netlify
 
 1. Push this folder to a GitHub repo (or drag-and-drop the folder into Netlify's
@@ -197,9 +226,6 @@ rather than more mockups:
   `components/editorial/HeroParallaxImage.jsx`, via Framer Motion) —
   homepage sections fade/rise into view on scroll; the hero image has a
   subtle parallax. Both respect `prefers-reduced-motion`.
-- **Custom cursor** (`components/layout/CustomCursor.jsx`) — desktop only
-  (checks for a fine pointer), off on touch devices and when reduced
-  motion is preferred.
 - **A confirmation chime** (`src/lib/sound.js`) — a soft two-note tone,
   synthesized with the Web Audio API on form/checkout success, so there's
   no audio file to ship or break.

@@ -1,9 +1,9 @@
-import GiftEditForm from "@/components/curation/GiftEditForm";
+import GiftCurationForm from "@/components/curation/GiftCurationForm";
 
 export const metadata = {
   title: "Gifting",
   description:
-    "She deserves something thoughtful. Tell us who she is, what you're celebrating and your budget — we'll create something beautiful.",
+    "Because the best gifts feel like they were chosen especially for her. Tell us who, the occasion and your budget — let Dame Allure curate something she'll love.",
 };
 
 export default function GiftingPage() {
@@ -11,18 +11,19 @@ export default function GiftingPage() {
     <section className="container-edit py-14 md:py-20">
       <div className="mb-12 max-w-lg">
         <p className="text-[12px] uppercase tracking-[0.15em] text-gold-deep">
-          Gifting
+          Gifting, Curated.
         </p>
         <h1 className="mt-4 font-display text-4xl text-plum md:text-5xl">
-          She deserves something thoughtful.
+          Because the best gifts feel like they were chosen especially for
+          her.
         </h1>
         <p className="mt-4 text-[15px] text-charcoal/80">
-          Tell us who she is, what you&apos;re celebrating and your budget.
-          We&apos;ll create something beautiful.
+          Tell us who, the occasion and your budget — let Dame Allure
+          curate something she&apos;ll love.
         </p>
       </div>
 
-      <GiftEditForm />
+      <GiftCurationForm />
     </section>
   );
 }

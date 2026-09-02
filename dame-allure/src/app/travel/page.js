@@ -4,10 +4,10 @@ import CategoryTile from "@/components/shop/CategoryTile";
 import PlaceholderPhoto from "@/components/ui/PlaceholderPhoto";
 
 const travelCategories = [
-  { slug: "vacation-edit", label: "Vacation Fashion", copy: "Everything she needs to travel beautifully." },
-  { slug: "travel-edit", label: "Travel Bags", copy: "Structured pieces that hold their shape from gate to hotel." },
-  { slug: "accessories", label: "Travel Accessories", copy: "The finishing details for the journey." },
-  { slug: "beauty-self-care", label: "Beauty & Self-Care", copy: "Thoughtful essentials for looking after her, wherever she is." },
+  { slug: "clothing", label: "Vacation Fashion", copy: "Everything she needs to travel beautifully.", href: "/shop/clothing" },
+  { slug: "bags", label: "Travel Bags", copy: "Structured pieces that hold their shape from gate to hotel.", href: "/shop/bags" },
+  { slug: "travel", label: "Travel Accessories", copy: "The finishing details for the journey.", href: "/shop/travel" },
+  { slug: "beauty-self-care", label: "Beauty & Self-Care", copy: "Thoughtful essentials for looking after her, wherever she is.", href: "/shop/beauty-self-care" },
 ];
 
 export const metadata = {
@@ -31,8 +31,8 @@ export default function TravelPage() {
               she needed.
             </p>
             <div className="mt-8">
-              <Button href="/create-your-edit?occasion=Travel" variant="primary">
-                Build My Travel Edit
+              <Button href="/create-your-curation?occasion=Travel" variant="primary">
+                Build My Travel Curation
               </Button>
             </div>
           </div>
@@ -52,7 +52,7 @@ export default function TravelPage() {
       <section className="container-edit py-14 md:py-20">
         <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2">
           {travelCategories.map((category) => (
-            <CategoryTile key={category.slug} category={category} />
+            <CategoryTile key={category.slug} category={category} href={category.href} />
           ))}
         </div>
       </section>
@@ -64,15 +64,15 @@ export default function TravelPage() {
           </p>
           <p className="mt-5 text-[14px] leading-relaxed text-ivory/70">
             Tell us the destination, the length of the trip and her budget —
-            your Curator builds a travel edit around it, from what she wears
-            to the small things that make a trip feel effortless.
+            your Curator builds a travel curation around it, from what she
+            wears to the small things that make a trip feel effortless.
           </p>
           <div className="mt-7">
             <Link
-              href="/create-your-edit?occasion=Travel"
+              href="/create-your-curation?occasion=Travel"
               className="text-[13px] uppercase tracking-[0.08em] text-gold-soft underline decoration-gold underline-offset-4 hover:text-gold-deep"
             >
-              Build My Travel Edit
+              Build My Travel Curation
             </Link>
           </div>
         </div>

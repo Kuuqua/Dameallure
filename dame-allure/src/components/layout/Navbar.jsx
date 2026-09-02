@@ -27,12 +27,12 @@ export default function Navbar() {
           />
         </Link>
 
-        <nav aria-label="Primary" className="hidden lg:flex lg:items-center lg:gap-9">
+        <nav aria-label="Primary" className="hidden xl:flex xl:items-center xl:gap-5">
           {primaryNav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-[13px] tracking-[0.06em] uppercase text-plum/85 transition-colors hover:text-plum"
+              className="text-[12px] tracking-[0.04em] uppercase text-plum/85 transition-colors hover:text-plum whitespace-nowrap"
             >
               {item.label}
             </Link>
@@ -75,7 +75,7 @@ export default function Navbar() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="text-plum lg:hidden"
+            className="text-plum xl:hidden"
           >
             {open ? <X size={22} strokeWidth={1.5} /> : <Menu size={22} strokeWidth={1.5} />}
           </button>
@@ -85,7 +85,7 @@ export default function Navbar() {
       {open ? (
         <nav
           aria-label="Mobile"
-          className="border-t border-plum/10 bg-ivory lg:hidden"
+          className="border-t border-plum/10 bg-ivory xl:hidden"
         >
           <ul className="container-edit flex flex-col py-2">
             {primaryNav.map((item) => (

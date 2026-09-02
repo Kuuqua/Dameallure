@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function OccasionCard({ label, copy, href }) {
+export default function OccasionCard({ label, copy, href, ctaLabel = "Shop now" }) {
   return (
     <Link
       href={href}
@@ -11,7 +11,7 @@ export default function OccasionCard({ label, copy, href }) {
         {copy}
       </p>
       <span className="mt-5 text-[12px] uppercase tracking-[0.08em] text-plum/70 transition-colors group-hover:text-gold-deep">
-        Shop the edit
+        {ctaLabel}
       </span>
     </Link>
   );

@@ -13,21 +13,25 @@ export const siteConfig = {
 export const primaryNav = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
-  { label: "Create Your Edit", href: "/create-your-edit" },
+  { label: "Shop By Occasion", href: "/shop-by-occasion" },
+  { label: "Collections", href: "/collections" },
   { label: "Travel", href: "/travel" },
   { label: "Gifting", href: "/gifting" },
-  { label: "About", href: "/about" },
+  { label: "Create Your Curation", href: "/create-your-curation" },
   { label: "Journal", href: "/journal" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const footerNav = [
   { label: "Shop", href: "/shop" },
-  { label: "Create Your Edit", href: "/create-your-edit" },
+  { label: "Shop By Occasion", href: "/shop-by-occasion" },
+  { label: "Collections", href: "/collections" },
   { label: "Travel", href: "/travel" },
   { label: "Gifting", href: "/gifting" },
-  { label: "About", href: "/about" },
+  { label: "Create Your Curation", href: "/create-your-curation" },
   { label: "Journal", href: "/journal" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -38,12 +42,12 @@ export const footerCare = [
   { label: "Terms", href: "/terms" },
 ];
 
-export const whatsappGreeting = `Welcome to Dame Allure. 🤍
+export const whatsappGreeting = `Hello, welcome to Dame Allure. 🤍
 
-Tell us what you're looking for and we'll help you create something beautifully suited to you.
+How can we help you find what you're looking for?
 
-Create My Edit
-Shop Fashion
+Create My Curation
+Shop
 Travel
 Gifting
 Speak to a Curator`;

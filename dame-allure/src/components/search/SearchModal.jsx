@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { X, Search as SearchIcon } from "lucide-react";
 import { products } from "@/data/products";
-import { shopCategories } from "@/data/shop-categories";
+import { departments } from "@/data/shop-taxonomy";
+import { occasions } from "@/data/occasions";
 import { journalArticles } from "@/data/journal";
 
 function buildIndex() {
@@ -13,14 +14,21 @@ function buildIndex() {
     label: p.name,
     sub: `GH₵${p.price.toLocaleString()}`,
     href: `/product/${p.slug}`,
-    haystack: `${p.name} ${p.shortDescription} ${p.category}`.toLowerCase(),
+    haystack: `${p.name} ${p.shortDescription} ${p.subcategory || ""}`.toLowerCase(),
   }));
-  const categoryEntries = shopCategories.map((c) => ({
-    type: "Collection",
-    label: c.label,
-    sub: c.copy,
-    href: `/shop/${c.slug}`,
-    haystack: `${c.label} ${c.copy}`.toLowerCase(),
+  const departmentEntries = departments.map((d) => ({
+    type: "Shop",
+    label: d.label,
+    sub: d.copy,
+    href: `/shop/${d.slug}`,
+    haystack: `${d.label} ${d.copy}`.toLowerCase(),
+  }));
+  const occasionEntries = occasions.map((o) => ({
+    type: "Occasion",
+    label: o.label,
+    sub: o.copy,
+    href: o.href,
+    haystack: `${o.label} ${o.copy}`.toLowerCase(),
   }));
   const journalEntries = journalArticles.map((a) => ({
     type: "Journal",
@@ -29,7 +37,7 @@ function buildIndex() {
     href: `/journal/${a.slug}`,
     haystack: `${a.title} ${a.excerpt} ${a.category}`.toLowerCase(),
   }));
-  return [...productEntries, ...categoryEntries, ...journalEntries];
+  return [...productEntries, ...departmentEntries, ...occasionEntries, ...journalEntries];
 }
 
 const INDEX = buildIndex();
@@ -87,7 +95,7 @@ export default function SearchModal({ open, onClose }) {
             {results.length === 0 ? (
               <p className="px-4 py-6 text-[14px] text-charcoal/60">
                 Nothing matched &ldquo;{query}&rdquo; — try a different word, or{" "}
-                <Link href="/create-your-edit" onClick={onClose} className="underline decoration-gold underline-offset-4">
+                <Link href="/create-your-curation" onClick={onClose} className="underline decoration-gold underline-offset-4">
                   let a Curator find it
                 </Link>
                 .

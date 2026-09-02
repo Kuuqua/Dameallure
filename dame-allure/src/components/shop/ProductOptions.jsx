@@ -78,7 +78,7 @@ export default function ProductOptions({ product }) {
           rel="noopener noreferrer"
           variant="gold"
         >
-          Ask a Dame Allure Curator
+          Ask a Curator
         </Button>
       </div>
     </div>

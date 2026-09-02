@@ -4,8 +4,8 @@ export default function CTASection({
   eyebrow = "More than shopping",
   heading = "Ready for something curated?",
   copy = "Tell us what you need, your budget and the occasion — your Curator takes it from there.",
-  ctaLabel = "Create Your Edit",
-  ctaHref = "/create-your-edit",
+  ctaLabel = "Create Your Curation",
+  ctaHref = "/create-your-curation",
 }) {
   return (
     <section className="container-edit py-16 md:py-24">
