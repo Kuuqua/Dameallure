@@ -38,7 +38,7 @@ export default function JournalArticlePage({ params }) {
         </h1>
 
         <div className="mt-8">
-          <ProductImagePlaceholder seed={article.slug} label="Editorial image" />
+          <ProductImagePlaceholder seed={article.slug} keywords={article.imageKeywords} />
         </div>
 
         <div className="mt-10 space-y-5">

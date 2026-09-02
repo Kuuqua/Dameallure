@@ -7,7 +7,7 @@ export default function NotFound() {
         Page not found
       </p>
       <h1 className="font-display text-4xl text-plum md:text-5xl">
-        This edit doesn&apos;t exist — yet.
+        This page doesn&apos;t exist — yet.
       </h1>
       <p className="max-w-md text-[15px] text-charcoal/80">
         The page you&apos;re looking for may have moved. Let&apos;s get you

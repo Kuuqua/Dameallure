@@ -30,11 +30,13 @@ export default function CollectionsPage() {
       {/* Signature Collection */}
       <section className="container-edit py-12 md:py-16">
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-12 md:gap-14">
-          <div className="md:col-span-6">
+          <div className="relative aspect-[6/7] w-full overflow-hidden rounded-sm md:col-span-6">
             <PlaceholderPhoto
               seed="signature-collection"
+              keywords="fashion,editorial,design"
               width={900}
               height={1050}
+              sizes="(min-width: 768px) 45vw, 100vw"
             />
           </div>
           <div className="relative md:col-span-6">

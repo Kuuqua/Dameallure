@@ -36,6 +36,7 @@ export default function ShopByOccasionPage() {
               key={occasion.key}
               label={occasion.label}
               copy={occasion.copy}
+              keywords={occasion.imageKeywords}
               href={occasion.href}
             />
           ))}

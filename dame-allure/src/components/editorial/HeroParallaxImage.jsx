@@ -14,10 +14,11 @@ export default function HeroParallaxImage() {
   const y = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 60]);
 
   return (
-    <div ref={ref} className="relative aspect-[4/5] w-full overflow-hidden md:aspect-[5/6]">
+    <div ref={ref} className="relative aspect-[4/5] w-full overflow-hidden rounded-sm md:aspect-[5/6]">
       <motion.div style={{ y }} className="absolute inset-0 h-[112%]">
         <PlaceholderPhoto
           seed="hero"
+          keywords="fashion,editorial,woman,portrait"
           width={1000}
           height={1250}
           priority

@@ -4,10 +4,10 @@ import CategoryTile from "@/components/shop/CategoryTile";
 import PlaceholderPhoto from "@/components/ui/PlaceholderPhoto";
 
 const travelCategories = [
-  { slug: "clothing", label: "Vacation Fashion", copy: "Everything she needs to travel beautifully.", href: "/shop/clothing" },
-  { slug: "bags", label: "Travel Bags", copy: "Structured pieces that hold their shape from gate to hotel.", href: "/shop/bags" },
-  { slug: "travel", label: "Travel Accessories", copy: "The finishing details for the journey.", href: "/shop/travel" },
-  { slug: "beauty-self-care", label: "Beauty & Self-Care", copy: "Thoughtful essentials for looking after her, wherever she is.", href: "/shop/beauty-self-care" },
+  { slug: "clothing", label: "Vacation Fashion", copy: "Everything she needs to travel beautifully.", href: "/shop/clothing", imageKeywords: "resort,vacation,dress" },
+  { slug: "bags", label: "Travel Bags", copy: "Structured pieces that hold their shape from gate to hotel.", href: "/shop/bags", imageKeywords: "luggage,travelbag,suitcase" },
+  { slug: "travel", label: "Travel Accessories", copy: "The finishing details for the journey.", href: "/shop/travel", imageKeywords: "travel,accessories,passport" },
+  { slug: "beauty-self-care", label: "Beauty & Self-Care", copy: "Thoughtful essentials for looking after her, wherever she is.", href: "/shop/beauty-self-care", imageKeywords: "beauty,skincare,selfcare" },
 ];
 
 export const metadata = {
@@ -37,9 +37,10 @@ export default function TravelPage() {
             </div>
           </div>
           <div className="md:col-span-5">
-            <div className="relative aspect-[4/3] w-full overflow-hidden">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm">
               <PlaceholderPhoto
                 seed="travel-hero"
+                keywords="travel,airport,woman,suitcase"
                 width={800}
                 height={600}
                 sizes="(min-width: 768px) 40vw, 100vw"

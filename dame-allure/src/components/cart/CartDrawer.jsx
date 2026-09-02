@@ -34,7 +34,7 @@ export default function CartDrawer() {
               </Link>{" "}
               or let a Curator{" "}
               <Link href="/create-your-curation" onClick={() => setOpen(false)} className="underline decoration-gold underline-offset-4">
-                build an edit for you
+                build a curation for you
               </Link>
               .
             </p>
@@ -54,7 +54,7 @@ export default function CartDrawer() {
                       <button
                         aria-label="Decrease quantity"
                         onClick={() => updateQuantity(item.key, item.quantity - 1)}
-                        className="border border-plum/25 p-1 text-plum/80 hover:border-plum"
+                        className="rounded-sm border border-plum/25 p-1 text-plum/80 hover:border-plum"
                       >
                         <Minus size={14} strokeWidth={1.5} />
                       </button>
@@ -62,7 +62,7 @@ export default function CartDrawer() {
                       <button
                         aria-label="Increase quantity"
                         onClick={() => updateQuantity(item.key, item.quantity + 1)}
-                        className="border border-plum/25 p-1 text-plum/80 hover:border-plum"
+                        className="rounded-sm border border-plum/25 p-1 text-plum/80 hover:border-plum"
                       >
                         <Plus size={14} strokeWidth={1.5} />
                       </button>

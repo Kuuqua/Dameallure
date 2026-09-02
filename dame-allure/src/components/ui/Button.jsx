@@ -20,7 +20,7 @@ export default function Button({
   ...props
 }) {
   const base =
-    "inline-flex items-center justify-center gap-2 px-7 py-3 text-[13px] tracking-[0.08em] uppercase font-medium transition-colors duration-200 disabled:opacity-40 disabled:pointer-events-none";
+    "inline-flex items-center justify-center gap-2 rounded-sm px-7 py-3 text-[13px] tracking-[0.08em] uppercase font-medium transition-colors duration-200 disabled:opacity-40 disabled:pointer-events-none";
   const classes = `${base} ${variants[variant] ?? variants.primary} ${className}`;
 
   if (href) {

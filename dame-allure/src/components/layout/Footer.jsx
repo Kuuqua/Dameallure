@@ -95,7 +95,7 @@ export default function Footer() {
         <div className="md:col-span-1">
           <p className="mb-1 font-display text-lg">Join the Allure List.</p>
           <p className="mb-4 text-[13px] leading-relaxed text-ivory/75">
-            Be the first to discover new edits, exclusive collaborations and
+            Be the first to discover new curations, exclusive collaborations and
             thoughtful inspiration.
           </p>
           <NewsletterForm />

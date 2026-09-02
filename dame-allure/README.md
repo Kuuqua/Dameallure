@@ -74,9 +74,13 @@ Verified: production build succeeds (67 routes) and `eslint` runs clean.
 - **Logo files** are in `public/brand/` (`logo.png`, `icon.png`) - already
   wired into the header and footer from your uploaded artwork.
 
-## Photography — real stock photos, tinted to the brand palette
+## Photography — real stock photos, contextually matched, tinted to the brand palette
 
-Every image on the site is a real photo from [Lorem Picsum](https://picsum.photos)
+Every image is a real photo from [LoremFlickr](https://loremflickr.com),
+keyword-matched to what it's actually showing (built by
+`src/lib/placeholder.js` + `imageKeywords` fields in the data files) — a
+"Work" tile pulls office imagery, "Jewellery & Accessories" pulls jewelry
+imagery, and so on — with a subtle plum tint
 (built by `src/lib/placeholder.js`), not a flat colour block — with a subtle
 plum tint (`PlaceholderPhoto.jsx`) so the random stock photography reads as
 on-brand rather than random, plus a small "Sample image" tag in the corner
@@ -102,7 +106,7 @@ replace `<PlaceholderPhoto ... />` with a plain
 (the parent `<div className="relative ...">` around it already handles
 sizing — leave that as-is). Once nothing imports
 `src/lib/placeholder.js` anymore, you can also remove the
-`images.remotePatterns` entry for `picsum.photos` in `next.config.mjs`.
+`images.remotePatterns` entry for `loremflickr.com` in `next.config.mjs`.
 
 ## What's built
 
@@ -250,9 +254,32 @@ initiating a Paystack payment, but a production setup should verify the
 transaction server-side via a Netlify Function before marking an order
 complete).
 
+## Since the amendment
+
+- **Fixed real dead links:** the footer's Delivery, Returns, Privacy and
+  Terms links pointed to pages that never existed — all four now exist
+  with placeholder policy copy (clearly marked as needing real legal
+  review before launch).
+- **Placeholder images now contextually match their content:** switched
+  from random Picsum photos to keyword-matched LoremFlickr — Work-related
+  imagery looks like an office, Jewellery & Accessories looks like
+  jewelry, the hero looks like fashion editorial, and so on. Every
+  product, department, occasion, journal article, and curator portrait
+  has explicit `imageKeywords` in its data file.
+- **Fixed a real bug:** the Collections page's Signature Collection image
+  had no positioned/sized wrapper around a `fill` image — would have
+  rendered broken or invisible.
+- **Subtle rounded corners** added throughout (`rounded-sm`) — images,
+  buttons, filter chips, size/colour selectors, badges — per request,
+  restrained rather than fully rounded.
+- **Swept for leftover "Edit" terminology** the amendment pass missed:
+  packaging copy, footer newsletter text, the cart drawer, the 404 page,
+  the About page's philosophy line and curator bios, and one journal
+  article whose slug/title/body still said "Travel Edit."
+
 ## Since Stage 7
 
-- Every placeholder now uses real photography from Lorem Picsum with a
+- Every placeholder now uses real, keyword-matched photography from LoremFlickr with a
   brand-colour tint (see the Photography section above), replacing both
   the original gradient blocks and an earlier flat-colour-plus-text
   version that read as bland/empty — particularly in the hero, which also

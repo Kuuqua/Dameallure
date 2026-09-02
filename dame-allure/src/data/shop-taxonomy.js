@@ -3,6 +3,7 @@ export const departments = [
     slug: "clothing",
     label: "Clothing",
     copy: "From boardroom to Friday to vacation — the full wardrobe.",
+    imageKeywords: "fashion,clothing,woman",
     subcategories: [
       "New Arrivals",
       "Tops",
@@ -24,18 +25,21 @@ export const departments = [
     slug: "shoes",
     label: "Shoes",
     copy: "Heels, flats and everything between.",
+    imageKeywords: "shoes,heels,fashion",
     subcategories: ["Heels", "Flats", "Sandals", "Sneakers", "Slippers"],
   },
   {
     slug: "bags",
     label: "Bags",
     copy: "Structured, considered, built for how she actually moves.",
+    imageKeywords: "handbag,purse,fashion",
     subcategories: ["Work Bags", "Handbags", "Crossbody Bags", "Evening Bags", "Travel Bags"],
   },
   {
     slug: "jewellery-accessories",
     label: "Jewellery & Accessories",
     copy: "The finishing details.",
+    imageKeywords: "jewelry,accessories,gold",
     subcategories: [
       "Jewellery",
       "Belts",
@@ -50,12 +54,14 @@ export const departments = [
     slug: "beauty-self-care",
     label: "Beauty & Self-Care",
     copy: "Thoughtful essentials for looking after her.",
+    imageKeywords: "beauty,cosmetics,skincare",
     subcategories: ["Fragrance", "Body Care", "Skincare", "Makeup", "Hair", "Beauty Tools"],
   },
   {
     slug: "travel",
     label: "Travel",
     copy: "The little things she didn't know she needed.",
+    imageKeywords: "travel,luggage,suitcase",
     subcategories: [
       "Passport Holders",
       "Luggage Tags",
@@ -69,6 +75,7 @@ export const departments = [
     slug: "gifts",
     label: "Gifts",
     copy: "Something thoughtful, beautifully put together.",
+    imageKeywords: "gift,present,ribbon",
     subcategories: [],
   },
 ];

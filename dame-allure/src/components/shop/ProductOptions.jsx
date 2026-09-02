@@ -30,7 +30,7 @@ export default function ProductOptions({ product }) {
               type="button"
               onClick={() => setSize(option)}
               aria-pressed={size === option}
-              className={`border px-4 py-2 text-[13px] transition-colors ${
+              className={`rounded-sm border px-4 py-2 text-[13px] transition-colors ${
                 size === option
                   ? "border-plum bg-plum text-ivory"
                   : "border-plum/25 text-plum/80 hover:border-plum"
@@ -53,7 +53,7 @@ export default function ProductOptions({ product }) {
               type="button"
               onClick={() => setColor(option)}
               aria-pressed={color === option}
-              className={`border px-4 py-2 text-[13px] transition-colors ${
+              className={`rounded-sm border px-4 py-2 text-[13px] transition-colors ${
                 color === option
                   ? "border-plum bg-plum text-ivory"
                   : "border-plum/25 text-plum/80 hover:border-plum"

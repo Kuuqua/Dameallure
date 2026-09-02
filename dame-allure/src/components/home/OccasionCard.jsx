@@ -1,12 +1,14 @@
 import Link from "next/link";
+import ProductImagePlaceholder from "@/components/shop/ProductImagePlaceholder";
 
-export default function OccasionCard({ label, copy, href, ctaLabel = "Shop now" }) {
+export default function OccasionCard({ label, copy, href, keywords, ctaLabel = "Shop now" }) {
   return (
     <Link
       href={href}
       className="group flex flex-col justify-between border-t border-plum/15 py-7 transition-colors hover:border-gold"
     >
-      <h3 className="font-display text-2xl text-plum">{label}</h3>
+      <ProductImagePlaceholder seed={label} keywords={keywords} className="aspect-[4/3]" />
+      <h3 className="mt-5 font-display text-2xl text-plum">{label}</h3>
       <p className="mt-3 max-w-[26ch] text-[14px] leading-relaxed text-charcoal/80">
         {copy}
       </p>

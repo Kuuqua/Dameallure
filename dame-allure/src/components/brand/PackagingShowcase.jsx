@@ -13,9 +13,10 @@ export default function PackagingShowcase() {
     <section className="bg-plum-deep py-16 text-ivory md:py-24">
       <div className="container-edit grid grid-cols-1 gap-12 md:grid-cols-12 md:items-center">
         <div className="md:col-span-6">
-          <div className="relative aspect-[4/5] w-full overflow-hidden">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm">
             <PlaceholderPhoto
               seed="packaging"
+              keywords="giftbox,packaging,ribbon"
               width={900}
               height={1125}
               sizes="(min-width: 768px) 45vw, 100vw"
@@ -30,7 +31,7 @@ export default function PackagingShowcase() {
             Packaging is part of the experience.
           </h2>
           <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ivory/75">
-            Thoughtful. Elegant. Memorable. Every edit arrives prepared with
+            Thoughtful. Elegant. Memorable. Every curation arrives prepared with
             the same care that went into curating it.
           </p>
           <ul className="mt-8 space-y-3">

@@ -19,6 +19,7 @@ export default function PreparingFor() {
             key={occasion.key}
             label={occasion.label}
             copy={occasion.copy}
+            keywords={occasion.imageKeywords}
             href={occasion.href}
           />
         ))}

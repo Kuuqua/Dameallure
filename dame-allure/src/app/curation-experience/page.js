@@ -4,7 +4,7 @@ import CTASection from "@/components/editorial/CTASection";
 export const metadata = {
   title: "The Curation Experience",
   description:
-    "More than shopping. How a Dame Allure edit gets curated, approved, prepared and delivered.",
+    "More than shopping. How a Dame Allure curation gets reviewed, approved, prepared and delivered.",
 };
 
 const steps = [
@@ -14,7 +14,7 @@ const steps = [
     title: "We Curate",
     copy: "We thoughtfully select pieces around your budget and purpose.",
   },
-  { number: "03", title: "You Approve", copy: "You review your proposed edit." },
+  { number: "03", title: "You Approve", copy: "You review your proposed curation." },
   {
     number: "04",
     title: "We Prepare",

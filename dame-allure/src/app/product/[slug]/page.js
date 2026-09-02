@@ -59,7 +59,7 @@ export default function ProductDetailPage({ params }) {
 
         <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-14">
           <div>
-            <ProductImagePlaceholder seed={product.slug} className="aspect-[4/5] md:aspect-[3/4]" />
+            <ProductImagePlaceholder seed={product.slug} keywords={product.imageKeywords} className="aspect-[4/5] md:aspect-[3/4]" />
           </div>
 
           <div className="max-w-md">

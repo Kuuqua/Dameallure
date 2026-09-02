@@ -4,7 +4,7 @@ import ProductImagePlaceholder from "@/components/shop/ProductImagePlaceholder";
 export default function JournalCard({ article }) {
   return (
     <Link href={`/journal/${article.slug}`} className="group block">
-      <ProductImagePlaceholder seed={article.slug} label="Editorial image" />
+      <ProductImagePlaceholder seed={article.slug} keywords={article.imageKeywords} />
       <p className="mt-4 text-[11px] uppercase tracking-[0.1em] text-gold-deep">
         {article.category}
       </p>

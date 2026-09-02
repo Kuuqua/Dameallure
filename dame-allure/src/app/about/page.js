@@ -55,7 +55,7 @@ export default function AboutPage() {
       <section className="bg-plum py-20 text-ivory md:py-24">
         <div className="container-edit max-w-2xl">
           <p className="font-display text-3xl italic leading-snug md:text-4xl">
-            Every edit is personal.
+            Every curation is personal.
             <br />
             Every detail is intentional.
           </p>
@@ -71,13 +71,13 @@ export default function AboutPage() {
             The people behind &ldquo;your Curator.&rdquo;
           </h2>
           <p className="mt-3 text-[15px] text-charcoal/80">
-            Every Edit is reviewed by a person, not an algorithm.
+            Every curation is reviewed by a person, not an algorithm.
           </p>
         </div>
         <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-3">
           {curators.map((curator) => (
             <div key={curator.slug}>
-              <ProductImagePlaceholder seed={curator.slug} className="aspect-[4/5]" />
+              <ProductImagePlaceholder seed={curator.slug} keywords={curator.imageKeywords} className="aspect-[4/5]" />
               <h3 className="mt-4 font-display text-xl text-plum">{curator.name}</h3>
               <p className="mt-1 text-[12px] uppercase tracking-[0.08em] text-gold-deep">
                 {curator.role}

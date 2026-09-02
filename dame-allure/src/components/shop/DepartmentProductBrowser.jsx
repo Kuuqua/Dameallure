@@ -23,7 +23,7 @@ export default function DepartmentProductBrowser({ products, subcategories }) {
               type="button"
               onClick={() => setActive(chip)}
               aria-pressed={active === chip}
-              className={`border px-4 py-2 text-[12px] uppercase tracking-[0.05em] transition-colors ${
+              className={`rounded-sm border px-4 py-2 text-[12px] uppercase tracking-[0.05em] transition-colors ${
                 active === chip
                   ? "border-plum bg-plum text-ivory"
                   : "border-plum/25 text-plum/80 hover:border-plum"

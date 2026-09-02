@@ -5,9 +5,9 @@ export default function ProductCard({ product }) {
   return (
     <Link href={`/product/${product.slug}`} className="group block">
       <div className="relative overflow-hidden">
-        <ProductImagePlaceholder seed={product.slug} />
+        <ProductImagePlaceholder seed={product.slug} keywords={product.imageKeywords} />
         {product.availability !== "In stock" ? (
-          <span className="absolute left-3 top-3 bg-ivory/90 px-2.5 py-1 text-[10px] uppercase tracking-[0.08em] text-plum/70">
+          <span className="absolute left-3 top-3 rounded-sm bg-ivory/90 px-2.5 py-1 text-[10px] uppercase tracking-[0.08em] text-plum/70">
             {product.availability}
           </span>
         ) : null}

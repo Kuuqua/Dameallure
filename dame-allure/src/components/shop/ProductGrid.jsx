@@ -4,7 +4,7 @@ export default function ProductGrid({ products }) {
   if (!products.length) {
     return (
       <p className="py-16 text-[14px] text-charcoal/80">
-        New pieces for this edit are on the way.
+        New pieces are on the way.
       </p>
     );
   }
