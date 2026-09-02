@@ -2,10 +2,12 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 export default function Breadcrumbs({ items }) {
+  const fullItems = [{ label: "Home", href: "/" }, ...items];
+
   return (
     <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-[12px] uppercase tracking-[0.05em]">
-      {items.map((item, index) => {
-        const isLast = index === items.length - 1;
+      {fullItems.map((item, index) => {
+        const isLast = index === fullItems.length - 1;
         return (
           <span key={item.href || item.label} className="flex items-center gap-1.5">
             {index > 0 ? (

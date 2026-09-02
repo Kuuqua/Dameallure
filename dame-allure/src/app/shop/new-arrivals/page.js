@@ -25,7 +25,6 @@ export default function NewArrivalsPage() {
         <ShopProductBrowser
           products={items}
           emptyStateProps={{
-            message: "Coming soon to Dame Allure.",
             ctaLabel: "Explore The Shop",
             ctaHref: "/shop",
           }}

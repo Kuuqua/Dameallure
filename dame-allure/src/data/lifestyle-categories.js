@@ -13,12 +13,12 @@ export const lifestyleCategories = [
   },
   {
     label: "Jewellery & Accessories",
-    href: "/shop/jewellery-accessories",
+    href: "/shop/accessories",
     imageKeywords: "jewelry,accessories,gold",
   },
   {
     label: "Beauty & Self-Care",
-    href: "/shop/beauty-self-care",
+    href: "/shop/beauty",
     imageKeywords: "beauty,skincare,cosmetics",
   },
   {

@@ -1,3 +1,12 @@
+// Route-slug overrides — where a clean short URL reads better than the
+// auto-generated one (e.g. "Trousers & Pants" would otherwise slugify to
+// "trousers-and-pants").
+const SLUG_OVERRIDES = {
+  "Trousers & Pants": "trousers",
+  "Blazers & Jackets": "blazers",
+  "Ankara & African-Inspired": "ankara",
+};
+
 export const departments = [
   {
     slug: "clothing",
@@ -35,7 +44,7 @@ export const departments = [
     subcategories: ["Work Bags", "Handbags", "Crossbody Bags", "Evening Bags", "Travel Bags"],
   },
   {
-    slug: "jewellery-accessories",
+    slug: "accessories",
     label: "Jewellery & Accessories",
     copy: "The finishing details.",
     imageKeywords: "jewelry,accessories,gold",
@@ -53,7 +62,7 @@ export const departments = [
     ],
   },
   {
-    slug: "beauty-self-care",
+    slug: "beauty",
     label: "Beauty & Self-Care",
     copy: "Thoughtful essentials for looking after her.",
     imageKeywords: "beauty,cosmetics,skincare",
@@ -78,7 +87,15 @@ export const departments = [
     label: "Gifts",
     copy: "Something thoughtful, beautifully put together.",
     imageKeywords: "gift,present,ribbon",
-    subcategories: [],
+    subcategories: [
+      "Gift Sets",
+      "Jewellery Gifts",
+      "Fragrance Gifts",
+      "Beauty & Self-Care Gifts",
+      "Travel Gifts",
+      "Nightwear Gifts",
+      "Accessories Gifts",
+    ],
   },
 ];
 
@@ -86,7 +103,25 @@ export function getDepartment(slug) {
   return departments.find((d) => d.slug === slug);
 }
 
+// Which filters apply to each department — deliberately not "show
+// whatever varies": Shoes doesn't get a Collection filter, Jewellery
+// doesn't get Occasion, etc., matching the brief's per-category list.
+export const departmentFilters = {
+  clothing: ["size", "color", "price", "occasion", "collection", "availability"],
+  shoes: ["size", "color", "price", "occasion", "availability"],
+  bags: ["color", "price", "occasion", "availability"],
+  accessories: ["type", "color", "price", "availability"],
+  beauty: ["type", "price", "availability"],
+  travel: ["type", "price", "availability"],
+  gifts: ["type", "price", "availability"],
+};
+
+export function getDepartmentFilters(slug) {
+  return departmentFilters[slug] || ["price", "availability"];
+}
+
 export function getSubcategorySlug(subcategory) {
+  if (SLUG_OVERRIDES[subcategory]) return SLUG_OVERRIDES[subcategory];
   return subcategory
     .toLowerCase()
     .replace(/&/g, "and")

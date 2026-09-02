@@ -254,6 +254,54 @@ initiating a Paystack payment, but a production setup should verify the
 transaction server-side via a Netlify Function before marking an order
 complete).
 
+## Shop category pages rebuild (URL & filter overhaul)
+
+A more detailed category-page spec came in after the first shop rebuild,
+with real differences from what existed — implemented now:
+
+- **Cleaner URLs**: `/shop/accessories` (was `/shop/jewellery-accessories`),
+  `/shop/beauty` (was `/shop/beauty-self-care`), and short subcategory
+  slugs — `/shop/clothing/trousers`, `/shop/clothing/blazers`,
+  `/shop/clothing/ankara` (were the auto-generated
+  `trousers-and-pants` / `blazers-and-jackets` / `ankara-and-african-inspired`).
+  All old URLs are gone, not aliased — if anything external links to the
+  old paths, they'll 404. Say if you want redirects added.
+- **Department-specific filters**, not "show whatever varies": Clothing
+  gets Size/Colour/Price/Occasion/Collection/Availability; Shoes drops
+  Collection; Bags drops Size; Accessories/Beauty/Travel/Gifts get a
+  **Type** filter (their subcategory) instead of Size/Occasion/Collection
+  (`shop-taxonomy.js` → `departmentFilters`).
+- **"Home" added to every breadcrumb** (`Breadcrumbs.jsx` now prepends it
+  automatically) — `Home / Shop / Clothing / Dresses`, as specified.
+- **Sort options corrected** to exactly Featured / Newest / Price Low-High
+  / Price High-Low (dropped the Name A–Z I'd added, which wasn't
+  requested).
+- **Gifts got its 7 subcategories** (Gift Sets, Jewellery Gifts, Fragrance
+  Gifts, Beauty & Self-Care Gifts, Travel Gifts, Nightwear Gifts,
+  Accessories Gifts) and a **Create A Gift Curation** CTA specific to that
+  page (every other department still says "Create Your Curation").
+- **8 new products** to close per-department count gaps — catalogue is
+  now 40 products: Shoes 4, Bags 4, Accessories 8, Beauty 4, Travel 4,
+  Gifts 5, Clothing 11.
+- **Editorial intro copy** written per subcategory that actually has
+  products (`subcategory-intros.js`, ~35 entries) — the empty ones fall
+  back to a generic line, matching the brief's own Dresses/Tops examples.
+- **New Arrivals + Shop By Occasion sections added to every department
+  landing page**, not just Clothing — a deliberate call: the brief's
+  worked example was Clothing specifically, but nothing suggested other
+  departments should work differently, so I applied it uniformly rather
+  than leaving Clothing as a special case. Say if you want it Clothing-only.
+- **Empty-state copy corrected** to the exact "Coming Soon / Beautiful
+  things are on their way. / Explore Other Categories" from this brief.
+
+**One number worth flagging**: Clothing sits at 11 products against the
+brief's "4–8 per major category" guidance. I kept it there rather than
+trimming, because cutting to 8 would mean re-introducing empty
+subcategories the earlier pass had deliberately filled — a judgement
+call, not an oversight.
+
+Verified: production build succeeds (139 routes) and `eslint` runs clean.
+
 ## Both remaining gaps closed
 
 - **Product image galleries.** Every product page now has a main image

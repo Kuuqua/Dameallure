@@ -7,6 +7,10 @@ import EmptyState from "@/components/shop/EmptyState";
 
 const PAGE_SIZE = 8;
 
+// Default: every filter, for pages that don't specify (occasion pages,
+// New Arrivals) since products there span multiple departments/types.
+const DEFAULT_FILTERS = ["size", "color", "price", "occasion", "collection", "availability"];
+
 function uniqueValues(products, getValue) {
   const set = new Set();
   products.forEach((p) => {
@@ -50,8 +54,8 @@ function FilterGroup({ label, options, value, onChange }) {
   );
 }
 
-export default function ShopProductBrowser({ products, emptyStateProps }) {
-  const [sort, setSort] = useState("newest");
+export default function ShopProductBrowser({ products, emptyStateProps, enabledFilters = DEFAULT_FILTERS }) {
+  const [sort, setSort] = useState("featured");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [size, setSize] = useState(null);
   const [color, setColor] = useState(null);
@@ -59,17 +63,29 @@ export default function ShopProductBrowser({ products, emptyStateProps }) {
   const [occasion, setOccasion] = useState(null);
   const [availability, setAvailability] = useState(null);
   const [collection, setCollection] = useState(null);
-  const [brand, setBrand] = useState(null);
-  const [collaboration, setCollaboration] = useState(null);
+  const [type, setType] = useState(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const sizes = useMemo(() => uniqueValues(products, (p) => p.sizes), [products]);
-  const colors = useMemo(() => uniqueValues(products, (p) => p.colors), [products]);
-  const occasions = useMemo(() => uniqueValues(products, (p) => p.occasions), [products]);
-  const availabilities = useMemo(() => uniqueValues(products, (p) => p.availability), [products]);
-  const collections = useMemo(() => uniqueValues(products, (p) => p.collection), [products]);
-  const brands = useMemo(() => uniqueValues(products, (p) => p.brand), [products]);
-  const collaborations = useMemo(() => uniqueValues(products, (p) => p.collaboration), [products]);
+  const has = (key) => enabledFilters.includes(key);
+
+  const sizes = useMemo(() => (has("size") ? uniqueValues(products, (p) => p.sizes) : []), [products, enabledFilters]);
+  const colors = useMemo(() => (has("color") ? uniqueValues(products, (p) => p.colors) : []), [products, enabledFilters]);
+  const occasions = useMemo(
+    () => (has("occasion") ? uniqueValues(products, (p) => p.occasions) : []),
+    [products, enabledFilters]
+  );
+  const availabilities = useMemo(
+    () => (has("availability") ? uniqueValues(products, (p) => p.availability) : []),
+    [products, enabledFilters]
+  );
+  const collections = useMemo(
+    () => (has("collection") ? uniqueValues(products, (p) => p.collection) : []),
+    [products, enabledFilters]
+  );
+  const types = useMemo(
+    () => (has("type") ? uniqueValues(products, (p) => p.subcategory) : []),
+    [products, enabledFilters]
+  );
 
   const filtered = useMemo(() => {
     let list = products;
@@ -82,20 +98,19 @@ export default function ShopProductBrowser({ products, emptyStateProps }) {
     if (occasion) list = list.filter((p) => p.occasions?.includes(occasion));
     if (availability) list = list.filter((p) => p.availability === availability);
     if (collection) list = list.filter((p) => p.collection === collection);
-    if (brand) list = list.filter((p) => p.brand === brand);
-    if (collaboration) list = list.filter((p) => p.collaboration === collaboration);
+    if (type) list = list.filter((p) => p.subcategory === type);
 
     const sorted = [...list];
     if (sort === "price-asc") sorted.sort((a, b) => a.price - b.price);
     else if (sort === "price-desc") sorted.sort((a, b) => b.price - a.price);
-    else if (sort === "name") sorted.sort((a, b) => a.name.localeCompare(b.name));
-    else sorted.sort((a, b) => (b.isNewArrival ? 1 : 0) - (a.isNewArrival ? 1 : 0));
+    else if (sort === "newest") sorted.sort((a, b) => (b.isNewArrival ? 1 : 0) - (a.isNewArrival ? 1 : 0));
+    // "featured" — keep the curated catalogue order as-is.
 
     return sorted;
-  }, [products, size, color, priceBand, occasion, availability, collection, brand, collaboration, sort]);
+  }, [products, size, color, priceBand, occasion, availability, collection, type, sort]);
 
   const visible = filtered.slice(0, visibleCount);
-  const activeFilterCount = [size, color, priceBand, occasion, availability, collection, brand, collaboration].filter(
+  const activeFilterCount = [size, color, priceBand, occasion, availability, collection, type].filter(
     Boolean
   ).length;
 
@@ -106,14 +121,12 @@ export default function ShopProductBrowser({ products, emptyStateProps }) {
     setOccasion(null);
     setAvailability(null);
     setCollection(null);
-    setBrand(null);
-    setCollaboration(null);
+    setType(null);
   };
 
   if (products.length === 0) {
     return <EmptyState {...emptyStateProps} />;
   }
-
 
   return (
     <div>
@@ -138,10 +151,10 @@ export default function ShopProductBrowser({ products, emptyStateProps }) {
               onChange={(e) => setSort(e.target.value)}
               className="border-none bg-transparent text-[12px] uppercase tracking-[0.06em] text-plum/80 focus:outline-none"
             >
+              <option value="featured">Featured</option>
               <option value="newest">Newest</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
-              <option value="name">Name: A–Z</option>
             </select>
           </label>
         </div>
@@ -162,19 +175,18 @@ export default function ShopProductBrowser({ products, emptyStateProps }) {
               </button>
             </div>
           </div>
-          <FilterGroup label="Size" options={sizes} value={size} onChange={setSize} />
-          <FilterGroup label="Colour" options={colors} value={color} onChange={setColor} />
+          {has("type") ? <FilterGroup label="Type" options={types} value={type} onChange={setType} /> : null}
+          {has("size") ? <FilterGroup label="Size" options={sizes} value={size} onChange={setSize} /> : null}
+          {has("color") ? <FilterGroup label="Colour" options={colors} value={color} onChange={setColor} /> : null}
           <FilterGroup
             label="Price"
             options={PRICE_BANDS.map((b) => b.label)}
             value={priceBand}
             onChange={setPriceBand}
           />
-          <FilterGroup label="Occasion" options={occasions} value={occasion} onChange={setOccasion} />
-          <FilterGroup label="Collection" options={collections} value={collection} onChange={setCollection} />
+          {has("occasion") ? <FilterGroup label="Occasion" options={occasions} value={occasion} onChange={setOccasion} /> : null}
+          {has("collection") ? <FilterGroup label="Collection" options={collections} value={collection} onChange={setCollection} /> : null}
           <FilterGroup label="Availability" options={availabilities} value={availability} onChange={setAvailability} />
-          <FilterGroup label="Brand" options={brands} value={brand} onChange={setBrand} />
-          <FilterGroup label="Collaboration" options={collaborations} value={collaboration} onChange={setCollaboration} />
         </div>
       ) : null}
 

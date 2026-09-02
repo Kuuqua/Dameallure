@@ -4,8 +4,10 @@ import {
   getDepartment,
   getSubcategorySlug,
   findSubcategoryByRouteSlug,
+  getDepartmentFilters,
 } from "@/data/shop-taxonomy";
 import { getProductsBySubcategory } from "@/data/products";
+import { getSubcategoryIntro } from "@/data/subcategory-intros";
 import Breadcrumbs from "@/components/shop/Breadcrumbs";
 import ShopProductBrowser from "@/components/shop/ShopProductBrowser";
 import CTASection from "@/components/editorial/CTASection";
@@ -37,6 +39,9 @@ export default function ShopSubcategoryPage({ params }) {
   if (!subcategory) notFound();
 
   const items = getProductsBySubcategory(department.slug, subcategory);
+  // "Type" (subcategory) filter doesn't apply here — the page is already
+  // scoped to one subcategory.
+  const filters = getDepartmentFilters(department.slug).filter((f) => f !== "type");
 
   return (
     <>
@@ -50,15 +55,15 @@ export default function ShopSubcategoryPage({ params }) {
         />
         <h1 className="mt-4 font-display text-4xl text-plum md:text-5xl">{subcategory}</h1>
         <p className="mt-3 max-w-lg text-[15px] text-charcoal/80">
-          Part of {department.label.toLowerCase()} — thoughtfully selected, not endlessly stocked.
+          {getSubcategoryIntro(department, subcategory)}
         </p>
       </section>
 
       <section className="container-edit py-10 md:py-14">
         <ShopProductBrowser
           products={items}
+          enabledFilters={filters}
           emptyStateProps={{
-            message: "Coming soon to Dame Allure.",
             ctaLabel: "Explore Other Categories",
             ctaHref: `/shop/${department.slug}`,
           }}

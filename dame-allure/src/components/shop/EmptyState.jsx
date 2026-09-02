@@ -2,17 +2,15 @@ import Link from "next/link";
 import Button from "@/components/ui/Button";
 
 export default function EmptyState({
-  message = "Coming soon to Dame Allure.",
+  message = "Coming Soon",
+  subtext = "Beautiful things are on their way.",
   ctaLabel = "Explore Other Categories",
   ctaHref = "/shop",
 }) {
   return (
     <div className="flex flex-col items-center py-16 text-center">
       <p className="font-display text-2xl text-plum">{message}</p>
-      <p className="mt-3 max-w-sm text-[14px] text-charcoal/70">
-        We&apos;re still curating this one. In the meantime, your Curator
-        can find something suited to you.
-      </p>
+      <p className="mt-3 max-w-sm text-[14px] text-charcoal/70">{subtext}</p>
       <div className="mt-7 flex flex-wrap justify-center gap-4">
         <Button href={ctaHref} variant="primary">
           {ctaLabel}

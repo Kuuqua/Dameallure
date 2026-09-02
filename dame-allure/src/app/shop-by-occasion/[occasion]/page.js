@@ -43,7 +43,6 @@ export default function ShopByOccasionDetailPage({ params }) {
         <ShopProductBrowser
           products={items}
           emptyStateProps={{
-            message: "Coming soon to Dame Allure.",
             ctaLabel: "Explore Other Occasions",
             ctaHref: "/shop-by-occasion",
           }}

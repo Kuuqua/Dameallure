@@ -7,7 +7,7 @@ const travelCategories = [
   { slug: "clothing", label: "Vacation Fashion", copy: "Everything she needs to travel beautifully.", href: "/shop/clothing", imageKeywords: "resort,vacation,dress" },
   { slug: "bags", label: "Travel Bags", copy: "Structured pieces that hold their shape from gate to hotel.", href: "/shop/bags", imageKeywords: "luggage,travelbag,suitcase" },
   { slug: "travel", label: "Travel Accessories", copy: "The finishing details for the journey.", href: "/shop/travel", imageKeywords: "travel,accessories,passport" },
-  { slug: "beauty-self-care", label: "Beauty & Self-Care", copy: "Thoughtful essentials for looking after her, wherever she is.", href: "/shop/beauty-self-care", imageKeywords: "beauty,skincare,selfcare" },
+  { slug: "beauty", label: "Beauty & Self-Care", copy: "Thoughtful essentials for looking after her, wherever she is.", href: "/shop/beauty", imageKeywords: "beauty,skincare,selfcare" },
 ];
 
 export const metadata = {
