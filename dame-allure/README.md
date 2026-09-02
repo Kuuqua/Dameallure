@@ -254,6 +254,63 @@ initiating a Paystack payment, but a production setup should verify the
 transaction server-side via a Netlify Function before marking an order
 complete).
 
+## Shop architecture rebuild
+
+Full Shop taxonomy and e-commerce architecture, per spec:
+
+- **7 departments, 46 real subcategories** — every one is a real route
+  (`/shop/clothing/dresses`, `/shop/shoes/sandals`, etc.), not a
+  client-side filter. Ones without products yet show a genuine "Coming
+  soon to Dame Allure" page instead of a 404 (`EmptyState.jsx`).
+- **Catalogue expanded 27 → 32 products** with the full data model:
+  subcategory, salePrice (unused — no items are on sale, matching "don't
+  oversell discounts"), stockQuantity, collection, **productSource**
+  (internal-only: Dame Allure Exclusive / Curated / Partner / On Demand —
+  never rendered to customers), brand, collaboration, SKU, tags, badge,
+  isNewArrival.
+- **Mega-menu** for Shop (desktop: click-toggled dropdown with all
+  departments/subcategories; mobile: accordion, department-level only so
+  the mobile menu doesn't become 46 items long).
+- **Sort + filter** (`ShopProductBrowser.jsx`) on every department,
+  subcategory, and occasion page — size, colour, price band, occasion,
+  collection, availability. Each filter only renders when the current
+  product set actually varies on that dimension (e.g. no colour filter
+  shows on a subcategory where everything's ivory).
+- **Breadcrumbs** everywhere in the shop hierarchy, including product
+  pages.
+- **Product cards**: badges (NEW / Dame Allure Exclusive / Limited / Low
+  Stock — used on 6 of 32 products, not everywhere), a wishlist heart, and
+  a Quick View button.
+- **Quick View** — preview and add to bag without leaving the grid
+  (`QuickViewModal.jsx` + `quick-view-context.jsx`).
+- **Wishlist** — real, persisted to localStorage, with its own icon +
+  count in the nav and a `/wishlist` page (`wishlist-context.jsx`).
+- **Complete The Look** — wired onto 4 flagship products (Ankara Wrap
+  Dress, Silk Column Gown, Midi Lace Dress, Resort Maxi Dress); each
+  companion piece is individually selectable, plus a bundled "Shop The
+  Look" button (`complete-the-look.js`, `CompleteTheLook.jsx`).
+- **Dame Allure Selects** — the 6-item editorial pick, on the Shop hub,
+  hand-picked via `dame-allure-selects.js` (not algorithmic).
+- **New Arrivals** as its own real page and mega-menu entry.
+- **Search** upgraded to match natural multi-word queries ("gold
+  earrings," "work trousers," "travel bag") against tags, colours, and
+  occasions, not just names.
+
+Verified: production build succeeds (124 routes) and `eslint` runs clean.
+
+### What this doesn't include
+
+- **Real inventory-scale filtering.** The filter UI is genuinely
+  functional, but with 1-3 products per subcategory in this launch
+  assortment, its value is mostly architectural right now — it'll matter
+  once the catalogue grows.
+- **Server-side wishlist/cart sync across devices.** Both are
+  localStorage-only (same as before) — a signed-in customer account would
+  be needed for cross-device persistence.
+- **Complete The Look isn't on all 32 products**, only the 4 flagship
+  pieces listed above — extending it to more products is a `complete-the-look.js`
+  data edit, not new code.
+
 ## Homepage refinements (targeted, not a rebuild)
 
 - Hero eyebrow → "A Women's Lifestyle Destination"; secondary CTA →

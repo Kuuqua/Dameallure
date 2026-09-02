@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { departments, getDepartment } from "@/data/shop-taxonomy";
+import { departments, getDepartment, getSubcategorySlug } from "@/data/shop-taxonomy";
 import { getProductsByDepartment } from "@/data/products";
-import DepartmentProductBrowser from "@/components/shop/DepartmentProductBrowser";
+import Breadcrumbs from "@/components/shop/Breadcrumbs";
+import ShopProductBrowser from "@/components/shop/ShopProductBrowser";
 import CTASection from "@/components/editorial/CTASection";
 
 export function generateStaticParams() {
@@ -26,23 +27,36 @@ export default function ShopDepartmentPage({ params }) {
 
   return (
     <>
-      <section className="container-edit pb-6 pt-14 md:pt-20">
-        <Link
-          href="/shop"
-          className="text-[12px] uppercase tracking-[0.08em] text-plum/70 hover:text-plum"
-        >
-          ← Shop
-        </Link>
+      <section className="container-edit pb-6 pt-10 md:pt-14">
+        <Breadcrumbs items={[{ label: "Shop", href: "/shop" }, { label: department.label }]} />
         <h1 className="mt-4 font-display text-4xl text-plum md:text-5xl">
           {department.label}
         </h1>
         <p className="mt-3 max-w-lg text-[15px] text-charcoal/80">{department.copy}</p>
+
+        {department.subcategories.length > 0 ? (
+          <div className="mt-6 flex flex-wrap gap-2">
+            {department.subcategories.map((sub) => (
+              <Link
+                key={sub}
+                href={`/shop/${department.slug}/${getSubcategorySlug(sub)}`}
+                className="rounded-sm border border-plum/20 px-3.5 py-1.5 text-[12px] text-plum/80 hover:border-plum hover:text-plum"
+              >
+                {sub}
+              </Link>
+            ))}
+          </div>
+        ) : null}
       </section>
 
       <section className="container-edit py-10 md:py-14">
-        <DepartmentProductBrowser
+        <ShopProductBrowser
           products={items}
-          subcategories={department.subcategories}
+          emptyStateProps={{
+            message: "Coming soon to Dame Allure.",
+            ctaLabel: "Explore Other Categories",
+            ctaHref: "/shop",
+          }}
         />
       </section>
 

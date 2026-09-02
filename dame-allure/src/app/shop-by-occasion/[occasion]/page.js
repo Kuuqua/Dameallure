@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { occasions } from "@/data/occasions";
 import { getProductsByOccasion } from "@/data/products";
-import ProductGrid from "@/components/shop/ProductGrid";
+import Breadcrumbs from "@/components/shop/Breadcrumbs";
+import ShopProductBrowser from "@/components/shop/ShopProductBrowser";
 import CTASection from "@/components/editorial/CTASection";
 
 // Only occasions routed to /shop-by-occasion/[slug] itself get a static
@@ -31,13 +31,8 @@ export default function ShopByOccasionDetailPage({ params }) {
 
   return (
     <>
-      <section className="container-edit pb-6 pt-14 md:pt-20">
-        <Link
-          href="/shop-by-occasion"
-          className="text-[12px] uppercase tracking-[0.08em] text-plum/70 hover:text-plum"
-        >
-          ← Shop By Occasion
-        </Link>
+      <section className="container-edit pb-6 pt-10 md:pt-14">
+        <Breadcrumbs items={[{ label: "Shop By Occasion", href: "/shop-by-occasion" }, { label: occasion.label }]} />
         <h1 className="mt-4 font-display text-4xl text-plum md:text-5xl">
           {occasion.label}
         </h1>
@@ -45,7 +40,14 @@ export default function ShopByOccasionDetailPage({ params }) {
       </section>
 
       <section className="container-edit py-10 md:py-14">
-        <ProductGrid products={items} />
+        <ShopProductBrowser
+          products={items}
+          emptyStateProps={{
+            message: "Coming soon to Dame Allure.",
+            ctaLabel: "Explore Other Occasions",
+            ctaHref: "/shop-by-occasion",
+          }}
+        />
       </section>
 
       <CTASection

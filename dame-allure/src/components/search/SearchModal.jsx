@@ -14,7 +14,7 @@ function buildIndex() {
     label: p.name,
     sub: `GH₵${p.price.toLocaleString()}`,
     href: `/product/${p.slug}`,
-    haystack: `${p.name} ${p.shortDescription} ${p.subcategory || ""}`.toLowerCase(),
+    haystack: `${p.name} ${p.shortDescription} ${p.subcategory || ""} ${(p.tags || []).join(" ")} ${(p.colors || []).join(" ")} ${(p.occasions || []).join(" ")}`.toLowerCase(),
   }));
   const departmentEntries = departments.map((d) => ({
     type: "Shop",
@@ -63,7 +63,8 @@ export default function SearchModal({ open, onClose }) {
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
-    return INDEX.filter((entry) => entry.haystack.includes(q)).slice(0, 8);
+    const words = q.split(/\s+/).filter(Boolean);
+    return INDEX.filter((entry) => words.every((word) => entry.haystack.includes(word))).slice(0, 8);
   }, [query]);
 
   if (!open) return null;

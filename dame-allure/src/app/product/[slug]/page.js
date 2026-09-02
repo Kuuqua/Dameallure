@@ -1,10 +1,13 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { products, getProduct } from "@/data/products";
 import { getDepartment } from "@/data/shop-taxonomy";
 import { whatsappLink } from "@/data/site";
+import { completeTheLook } from "@/data/complete-the-look";
+import Breadcrumbs from "@/components/shop/Breadcrumbs";
 import ProductImagePlaceholder from "@/components/shop/ProductImagePlaceholder";
+import ProductBadge from "@/components/shop/ProductBadge";
 import ProductOptions from "@/components/shop/ProductOptions";
+import CompleteTheLook from "@/components/shop/CompleteTheLook";
 import Accordion from "@/components/ui/Accordion";
 import ProductGrid from "@/components/shop/ProductGrid";
 
@@ -29,6 +32,7 @@ export default function ProductDetailPage({ params }) {
   const related = products
     .filter((p) => p.department === product.department && p.slug !== product.slug)
     .slice(0, 4);
+  const companionSlugs = completeTheLook[product.slug] || [];
 
   const infoItems = [
     { title: "Material & Fabric", content: product.material },
@@ -45,17 +49,20 @@ export default function ProductDetailPage({ params }) {
     },
   ];
 
+  const breadcrumbItems = [{ label: "Shop", href: "/shop" }];
+  if (department) {
+    breadcrumbItems.push({ label: department.label, href: `/shop/${department.slug}` });
+  }
+  if (product.subcategory) {
+    breadcrumbItems.push({ label: product.subcategory });
+  } else {
+    breadcrumbItems.push({ label: product.name });
+  }
+
   return (
     <>
-      <section className="container-edit pt-14 md:pt-20">
-        {department ? (
-          <Link
-            href={`/shop/${department.slug}`}
-            className="text-[12px] uppercase tracking-[0.08em] text-plum/70 hover:text-plum"
-          >
-            ← {department.label}
-          </Link>
-        ) : null}
+      <section className="container-edit pt-10 md:pt-14">
+        <Breadcrumbs items={breadcrumbItems} />
 
         <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-14">
           <div>
@@ -63,6 +70,11 @@ export default function ProductDetailPage({ params }) {
           </div>
 
           <div className="max-w-md">
+            {product.badge ? (
+              <div className="mb-3">
+                <ProductBadge badge={product.badge} />
+              </div>
+            ) : null}
             <h1 className="font-display text-3xl text-plum md:text-4xl">
               {product.name}
             </h1>
@@ -100,6 +112,10 @@ export default function ProductDetailPage({ params }) {
             </div>
           </div>
         </div>
+
+        {companionSlugs.length ? (
+          <CompleteTheLook anchorProduct={product} companionSlugs={companionSlugs} />
+        ) : null}
       </section>
 
       {related.length ? (

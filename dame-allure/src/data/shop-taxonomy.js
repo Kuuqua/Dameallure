@@ -5,7 +5,6 @@ export const departments = [
     copy: "From boardroom to Friday to vacation — the full wardrobe.",
     imageKeywords: "fashion,clothing,woman",
     subcategories: [
-      "New Arrivals",
       "Tops",
       "Dresses",
       "Trousers & Pants",
@@ -16,8 +15,8 @@ export const departments = [
       "Denim",
       "Nightwear",
       "Loungewear",
-      "Swimwear",
       "Vacation Wear",
+      "Swimwear",
       "Ankara & African-Inspired",
     ],
   },
@@ -41,13 +40,16 @@ export const departments = [
     copy: "The finishing details.",
     imageKeywords: "jewelry,accessories,gold",
     subcategories: [
-      "Jewellery",
+      "Earrings",
+      "Necklaces",
+      "Bracelets",
+      "Rings",
       "Belts",
       "Scarves",
       "Sunglasses",
       "Hair Accessories",
       "Watches",
-      "Other Accessories",
+      "Jewellery Organisers",
     ],
   },
   {
@@ -55,7 +57,7 @@ export const departments = [
     label: "Beauty & Self-Care",
     copy: "Thoughtful essentials for looking after her.",
     imageKeywords: "beauty,cosmetics,skincare",
-    subcategories: ["Fragrance", "Body Care", "Skincare", "Makeup", "Hair", "Beauty Tools"],
+    subcategories: ["Fragrance", "Body Care", "Skincare", "Makeup", "Hair", "Beauty Tools", "Self-Care"],
   },
   {
     slug: "travel",
@@ -66,8 +68,8 @@ export const departments = [
       "Passport Holders",
       "Luggage Tags",
       "Travel Pouches",
-      "Travel Organisers",
       "Toiletry Bags",
+      "Travel Organisers",
       "Travel Accessories",
     ],
   },
@@ -82,4 +84,18 @@ export const departments = [
 
 export function getDepartment(slug) {
   return departments.find((d) => d.slug === slug);
+}
+
+export function getSubcategorySlug(subcategory) {
+  return subcategory
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+export function findSubcategoryByRouteSlug(department, routeSlug) {
+  return department.subcategories.find(
+    (sub) => getSubcategorySlug(sub) === routeSlug
+  );
 }

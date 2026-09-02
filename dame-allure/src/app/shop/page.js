@@ -1,12 +1,13 @@
+import Link from "next/link";
 import { departments } from "@/data/shop-taxonomy";
 import CategoryTile from "@/components/shop/CategoryTile";
-import Link from "next/link";
+import DameAllureSelects from "@/components/shop/DameAllureSelects";
 import CTASection from "@/components/editorial/CTASection";
 
 export const metadata = {
   title: "Shop",
   description:
-    "Shop Dame Allure by category — Clothing, Shoes, Bags, Jewellery & Accessories, Beauty & Self-Care, Travel and Gifts.",
+    "Shop Dame Allure by category — New Arrivals, Clothing, Shoes, Bags, Jewellery & Accessories, Beauty & Self-Care, Travel and Gifts.",
 };
 
 export default function ShopPage() {
@@ -29,6 +30,14 @@ export default function ShopPage() {
           </Link>
           .
         </p>
+        <p className="mt-5">
+          <Link
+            href="/shop/new-arrivals"
+            className="inline-block rounded-sm border border-plum px-6 py-2.5 text-[12px] uppercase tracking-[0.08em] text-plum hover:bg-plum hover:text-ivory"
+          >
+            New Arrivals
+          </Link>
+        </p>
       </section>
 
       <section className="container-edit py-12 md:py-16">
@@ -42,6 +51,8 @@ export default function ShopPage() {
           ))}
         </div>
       </section>
+
+      <DameAllureSelects />
 
       <CTASection />
     </>

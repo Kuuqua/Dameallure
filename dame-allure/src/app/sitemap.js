@@ -1,4 +1,4 @@
-import { departments } from "@/data/shop-taxonomy";
+import { departments, getSubcategorySlug } from "@/data/shop-taxonomy";
 import { occasions } from "@/data/occasions";
 import { products } from "@/data/products";
 import { journalArticles } from "@/data/journal";
@@ -9,6 +9,7 @@ export default function sitemap() {
   const staticRoutes = [
     "",
     "/shop",
+    "/shop/new-arrivals",
     "/shop-by-occasion",
     "/collections",
     "/create-your-curation",
@@ -29,6 +30,14 @@ export default function sitemap() {
     changeFrequency: "weekly",
     priority: 0.7,
   }));
+
+  const subcategoryRoutes = departments.flatMap((d) =>
+    d.subcategories.map((sub) => ({
+      url: `${BASE_URL}/shop/${d.slug}/${getSubcategorySlug(sub)}`,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    }))
+  );
 
   const occasionRoutes = occasions
     .filter((o) => o.href === `/shop-by-occasion/${o.key}`)
@@ -53,6 +62,7 @@ export default function sitemap() {
   return [
     ...staticRoutes,
     ...departmentRoutes,
+    ...subcategoryRoutes,
     ...occasionRoutes,
     ...productRoutes,
     ...journalRoutes,
