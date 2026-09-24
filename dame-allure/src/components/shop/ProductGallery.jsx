@@ -5,11 +5,28 @@ import PlaceholderPhoto from "@/components/ui/PlaceholderPhoto";
 
 const GALLERY_SIZE = 3;
 
-export default function ProductGallery({ slug, keywords, className = "aspect-[4/5] md:aspect-[3/4]" }) {
+export default function ProductGallery({
+  slug,
+  keywords,
+  className = "aspect-[4/5] md:aspect-[3/4]",
+  image = null,
+  alt = "",
+}) {
   // Same primary seed as every other touch point (card, quick view) so the
   // main image stays consistent; two extra seeds give gallery variety.
   const seeds = Array.from({ length: GALLERY_SIZE }, (_, i) => (i === 0 ? slug : `${slug}-angle-${i + 1}`));
   const [active, setActive] = useState(0);
+
+  // Real product photography: we only have one genuine photo per product
+  // (no separate real angles), so show it as a single clean image rather
+  // than padding out a fake multi-thumbnail gallery.
+  if (image) {
+    return (
+      <div className={`relative w-full overflow-hidden rounded-sm border border-plum/10 ${className}`}>
+        <PlaceholderPhoto image={image} alt={alt} sizes="(min-width: 768px) 45vw, 100vw" />
+      </div>
+    );
+  }
 
   return (
     <div>

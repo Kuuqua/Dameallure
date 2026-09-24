@@ -56,6 +56,8 @@ export default function CompleteTheLook({ anchorProduct, companionSlugs }) {
                 <ProductImagePlaceholder
                   seed={item.slug}
                   keywords={item.imageKeywords}
+                  image={item.image}
+                  alt={item.name}
                   className="aspect-[4/5]"
                 />
                 <input

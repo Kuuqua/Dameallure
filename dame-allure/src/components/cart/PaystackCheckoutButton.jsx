@@ -26,10 +26,31 @@ function loadPaystackScript() {
   });
 }
 
+// Asks OUR OWN server (a Netlify Function, never the browser) to confirm
+// with Paystack directly that this transaction really went through, using
+// the secret key that only the server holds. The Paystack popup's
+// `callback` firing is not proof of payment on its own — anyone can
+// trigger it from devtools — so nothing here is treated as "paid" until
+// this comes back verified.
+async function verifyPayment({ reference, email, items, subtotal }) {
+  try {
+    const res = await fetch("/.netlify/functions/verify-payment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reference, email, items, subtotal }),
+    });
+    const data = await res.json();
+    return data;
+  } catch {
+    return { verified: false, error: "Could not reach the server to confirm your payment." };
+  }
+}
+
 export default function PaystackCheckoutButton() {
   const { items, subtotal, clear, setOpen } = useCart();
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle"); // idle | loading | success
+  const [status, setStatus] = useState("idle"); // idle | loading | verifying | success | failed
+  const [error, setError] = useState("");
   const isPlaceholderKey = siteConfig.paystackPublicKey.includes("replace_with");
 
   useEffect(() => {
@@ -40,11 +61,13 @@ export default function PaystackCheckoutButton() {
   const handlePay = async () => {
     if (!email || items.length === 0) return;
     setStatus("loading");
+    setError("");
 
     if (isPlaceholderKey) {
       // No real key configured yet — this is where a live payment would
       // normally happen. Kept as a clearly-labelled stand-in so the flow
-      // is demoable without a Paystack account.
+      // is demoable without a Paystack account. No server verification
+      // runs here because there is no real transaction to verify.
       window.setTimeout(() => {
         setStatus("success");
         playConfirmChime();
@@ -61,16 +84,41 @@ export default function PaystackCheckoutButton() {
         amount: Math.round(subtotal * 100), // pesewas
         currency: "GHS",
         ref: `dame-allure-${Date.now()}`,
-        callback: () => {
-          setStatus("success");
-          playConfirmChime();
-          clear();
+        metadata: {
+          custom_fields: [
+            {
+              display_name: "Order Items",
+              variable_name: "order_items",
+              value: items.map((i) => `${i.name} x${i.quantity}`).join("; "),
+            },
+          ],
         },
-        onClose: () => setStatus("idle"),
+        callback: (response) => {
+          // The popup says it went through — now prove it server-side
+          // before touching the cart or showing "payment received".
+          setStatus("verifying");
+          verifyPayment({ reference: response.reference, email, items, subtotal }).then((result) => {
+            if (result.verified) {
+              setStatus("success");
+              playConfirmChime();
+              clear();
+            } else {
+              setStatus("failed");
+              setError(
+                result.error ||
+                  "We couldn't confirm this payment. If you were charged, please contact us before trying again."
+              );
+            }
+          });
+        },
+        onClose: () => {
+          setStatus((current) => (current === "verifying" ? current : "idle"));
+        },
       });
       handler.openIframe();
     } catch {
       setStatus("idle");
+      setError("Could not open the payment window. Please try again.");
     }
   };
 
@@ -107,11 +155,18 @@ export default function PaystackCheckoutButton() {
         type="button"
         variant="primary"
         className="w-full"
-        disabled={!email || status === "loading"}
+        disabled={!email || status === "loading" || status === "verifying"}
         onClick={handlePay}
       >
-        {status === "loading" ? "Processing…" : `Pay GH₵${subtotal.toLocaleString()} with Paystack`}
+        {status === "loading"
+          ? "Opening secure payment…"
+          : status === "verifying"
+            ? "Confirming your payment…"
+            : `Pay GH₵${subtotal.toLocaleString()} with Paystack`}
       </Button>
+      {status === "failed" ? (
+        <p className="mt-2 text-[12px] text-red-700">{error}</p>
+      ) : null}
       {isPlaceholderKey ? (
         <p className="mt-2 text-[11px] text-charcoal/50">
           Test mode — set a real Paystack key in src/data/site.js to accept

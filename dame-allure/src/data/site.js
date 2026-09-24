@@ -7,6 +7,12 @@ export const siteConfig = {
   instagram: "https://instagram.com/dameallure",
   // TODO: replace with your real Paystack PUBLIC key (starts with pk_live_ once you're live —
   // pk_test_ keys are safe to leave in client-side code, but never put a secret key (sk_...) here).
+  //
+  // The matching SECRET key (sk_live_... / sk_test_...) does NOT go in this
+  // file, or anywhere else in the app's source — it must only ever be set
+  // as the PAYSTACK_SECRET_KEY environment variable in Netlify's dashboard
+  // (Site settings → Environment variables), where netlify/functions/verify-payment.js
+  // reads it server-side to confirm real payments. See README.md "Going live".
   paystackPublicKey: "pk_test_replace_with_your_real_key",
 };
 

@@ -74,6 +74,65 @@ Verified: production build succeeds (67 routes) and `eslint` runs clean.
 - **Logo files** are in `public/brand/` (`logo.png`, `icon.png`) - already
   wired into the header and footer from your uploaded artwork.
 
+## Going live with real payments
+
+Earlier builds only *looked* like they took payment: the Paystack popup
+firing its `callback` was treated as proof of success, with nothing
+checking that money actually moved. That's fixed. The flow is now:
+
+1. Customer pays in the Paystack popup (client-side, as before).
+2. On the popup's callback, the browser calls our own server —
+   `netlify/functions/verify-payment.js` — with just the payment
+   reference.
+3. That function asks Paystack directly, using your **secret** key, "did
+   this reference really succeed, and for how much?" Only Paystack's
+   answer decides whether the order is treated as paid — the browser is
+   never trusted on this.
+4. Only once that comes back verified does the site show "Payment
+   received" and clear the cart. If verification fails, the customer sees
+   an error instead and the cart is preserved.
+
+**To turn this on, in Netlify (Site configuration → Environment variables), set:**
+
+- `PAYSTACK_SECRET_KEY` — your secret key from the Paystack dashboard
+  (Settings → API Keys & Webhooks). Starts with `sk_test_...` while
+  testing, `sk_live_...` once you're live. **Set this only here — never
+  in `site.js` or any other file that ships to the browser.**
+
+Also update `src/data/site.js`:
+
+- `paystackPublicKey` — the matching **public** key (`pk_test_...` /
+  `pk_live_...`). This one is safe in client-side code.
+
+Use the matching test/live pair together (`sk_test_` with `pk_test_`, or
+`sk_live_` with `pk_live_`) — mixing them will fail verification. Test
+with Paystack's test card numbers before flipping to live keys.
+
+### Optional: email yourself when an order comes in
+
+`verify-payment.js` can also send you an email the moment a payment
+verifies, using [Resend](https://resend.com) (free tier available, no
+SMTP setup). Skipped automatically if unset — verification still works
+either way. To turn it on, set these Netlify environment variables too:
+
+- `RESEND_API_KEY` — from your Resend account.
+- `ORDER_FROM_EMAIL` — the "from" address; must be on a domain you've
+  verified with Resend.
+- `ORDER_NOTIFICATION_EMAIL` — where you want order emails delivered
+  (e.g. your own inbox).
+
+Prefer a different provider (SMTP, SendGrid, etc.) instead? Swap the body
+of `sendOrderNotification()` in `netlify/functions/verify-payment.js` —
+the verification logic above it doesn't need to change.
+
+### What's still manual for now
+
+There's no order database or admin dashboard yet — a verified order
+currently means "Paystack confirms it succeeded" plus, optionally, one
+email to you. For early volume that's workable (Paystack's own dashboard
+is your order log); a proper orders table is a natural next step once
+volume picks up.
+
 ## Photography — real stock photos, contextually matched, tinted to the brand palette
 
 Every image is a real photo from [LoremFlickr](https://loremflickr.com),

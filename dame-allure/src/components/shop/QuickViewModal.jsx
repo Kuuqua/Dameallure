@@ -39,7 +39,13 @@ export default function QuickViewModal() {
         </button>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          <ProductImagePlaceholder seed={product.slug} keywords={product.imageKeywords} className="aspect-[4/5]" />
+          <ProductImagePlaceholder
+            seed={product.slug}
+            keywords={product.imageKeywords}
+            image={product.image}
+            alt={product.name}
+            className="aspect-[4/5]"
+          />
 
           <div>
             {product.badge ? (

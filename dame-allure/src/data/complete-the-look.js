@@ -1,17 +1,11 @@
-// Scoped to garments — a jewellery box or a candle doesn't need a
-// "complete the look" bundle the way an outfit does. Covers all 11
-// clothing pieces in the launch catalogue; extend by adding more slugs
-// as the catalogue grows.
-export const completeTheLook = {
-  "structured-blazer-plum": ["gold-cuff-bracelet", "monogram-tote"],
-  "silk-wrap-blouse": ["pleated-midi-skirt", "gold-cuff-bracelet"],
-  "ankara-wrap-dress": ["leather-strap-sandals", "ankara-clutch-bag", "beaded-drop-earrings"],
-  "midi-lace-dress": ["pearl-clutch", "gold-hoop-earrings"],
-  "linen-co-ord-set": ["leather-strap-sandals", "oversized-sunglasses", "woven-sun-hat"],
-  "silk-gown-plum": ["embellished-heels", "pearl-clutch", "statement-drop-necklace"],
-  "pleated-midi-skirt": ["silk-wrap-blouse", "layered-necklace-set"],
-  "resort-maxi-dress": ["leather-strap-sandals", "oversized-sunglasses", "woven-sun-hat"],
-  "classic-tailored-trousers": ["structured-blazer-plum", "layered-necklace-set"],
-  "silk-slip-nightwear": ["rose-facial-oil", "shea-body-oil", "self-care-candle"],
-  "one-piece-swimsuit": ["leather-strap-sandals", "oversized-sunglasses", "woven-sun-hat"],
-};
+// Scoped to garments paired with complementary pieces (shoes, bags,
+// jewellery) — a real "complete the look" bundle needs items outside the
+// garment itself.
+//
+// The current real catalogue (37 pieces) is dresses and two-piece sets
+// only — no shoes, bags or accessories exist yet as real inventory, so
+// there is nothing genuine to pair against. Left empty rather than
+// pairing dresses with other dresses, which isn't what "Complete the
+// Look" means. Populate this once real accessory/shoe/bag products are
+// added to the catalogue.
+export const completeTheLook = {};

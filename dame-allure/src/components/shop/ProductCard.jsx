@@ -16,7 +16,12 @@ export default function ProductCard({ product }) {
     <div className="group">
       <Link href={`/product/${product.slug}`} className="block">
         <div className="relative overflow-hidden">
-          <ProductImagePlaceholder seed={product.slug} keywords={product.imageKeywords} />
+          <ProductImagePlaceholder
+            seed={product.slug}
+            keywords={product.imageKeywords}
+            image={product.image}
+            alt={product.name}
+          />
 
           <div className="absolute left-3 top-3 flex flex-col gap-1.5">
             {product.badge ? <ProductBadge badge={product.badge} /> : null}

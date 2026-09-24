@@ -68,7 +68,13 @@ export default async function ProductDetailPage({ params }) {
 
         <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-14">
           <div>
-            <ProductGallery slug={product.slug} keywords={product.imageKeywords} className="aspect-[4/5] md:aspect-[3/4]" />
+            <ProductGallery
+              slug={product.slug}
+              keywords={product.imageKeywords}
+              image={product.image}
+              alt={product.name}
+              className="aspect-[4/5] md:aspect-[3/4]"
+            />
           </div>
 
           <div className="max-w-md">

@@ -4,6 +4,8 @@ export default function ProductImagePlaceholder({
   seed = "",
   keywords,
   className = "",
+  image = null,
+  alt = "",
 }) {
   const aspect = className.includes("aspect-") ? "" : "aspect-[4/5]";
 
@@ -14,6 +16,8 @@ export default function ProductImagePlaceholder({
       <PlaceholderPhoto
         seed={seed}
         keywords={keywords}
+        image={image}
+        alt={alt}
         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
       />
     </div>

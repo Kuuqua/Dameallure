@@ -9,12 +9,21 @@ export default function PlaceholderPhoto({
   sizes,
   priority = false,
   showTag = true,
+  image = null,
+  alt = "",
 }) {
+  // Real product photography, when supplied, is rendered as-is: no brand
+  // tint and no "Sample image" tag, since this is genuine Dame Allure
+  // inventory rather than temporary stock photography.
+  if (image) {
+    return <Image src={image} alt={alt} fill priority={priority} sizes={sizes} className="object-cover" />;
+  }
+
   return (
     <>
       <Image
         src={placeholderImage({ width, height, seed, keywords })}
-        alt=""
+        alt={alt}
         fill
         priority={priority}
         sizes={sizes}
